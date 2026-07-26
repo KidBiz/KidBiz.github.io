@@ -1,0 +1,81 @@
+/* ============================================================
+   KidFinance — Design tokens
+   สี/ฟอนต์ตามแบรนด์ KidBiz (kidbizgroup.com)
+   แก้ branding ที่ไฟล์นี้ไฟล์เดียว
+   ============================================================ */
+
+:root {
+  /* --- Brand core (ตรงกับเว็บ KidBiz) --- */
+  --brand-teal:      #00B1CB;
+  --brand-teal-d:    #0090A8;
+  --brand-teal-soft: #EAFAFC;
+  --brand-magenta:   #AD1A70;
+  --brand-magenta-soft: #FDEEF6;
+  --brand-amber:     #FFB703;
+  --brand-amber-d:   #B47B00;
+  --brand-amber-soft:#FFF6E0;
+
+  /* --- ตัวอักษร / เส้น / พื้น --- */
+  --c-ink:       #18181B;
+  --c-ink-2:     #5A5A66;
+  --c-ink-3:     #8B8B96;
+  --c-line:      #EAECF0;
+  --c-surface:   #FFFFFF;
+  --c-surface-2: #F6F5F1;
+  --c-bg:        #FCFBF8;
+
+  /* --- ความคืบหน้า (แถบที่เติมขึ้น) --- */
+  --c-fill:      var(--brand-teal);
+  --c-fill-d:    var(--brand-teal-d);
+  --c-fill-soft: var(--brand-teal-soft);
+  --c-fill-ink:  #00707F;          /* teal เข้มพอสำหรับตัวหนังสือบนพื้นอ่อน */
+  --c-pending:   #7FD8E5;
+
+  /* --- แท่งที่ยังไม่ถูกเติม --- */
+  --c-well:      #2C2C33;
+  --c-well-d:    #18181B;
+  --c-well-line: #45454E;
+
+  /* --- ซองเงิน 4 ซอง --- */
+  --c-need:  var(--brand-teal);
+  --c-save:  var(--brand-magenta);
+  --c-spend: var(--brand-amber);
+  --c-share: #5A5A66;
+
+  /* --- โทนอื่น --- */
+  --c-pause:      var(--brand-amber);
+  --c-pause-ink:  var(--brand-amber-d);
+  --c-parent:     var(--brand-magenta);
+  --c-parent-soft:var(--brand-magenta-soft);
+  --c-neutral:    #8B8B96;          /* สถานะกลางๆ — ห้ามใช้สีแดงตำหนิ */
+  --c-gold:       var(--brand-amber);
+
+  /* --- ตัวอักษร ---
+     ขนาดตั้งใจให้ใหญ่ อ่านสบายสำหรับผู้ใหญ่ 40-55 บนมือถือ
+     ถ้าจะปรับ ปรับที่ 5 ค่านี้พร้อมกัน สัดส่วนจะยังสวย */
+  --font:    "Poppins", "Mitr", "Segoe UI", system-ui, sans-serif;
+  --font-th: "Mitr", "Poppins", "Leelawadee UI", "Segoe UI", sans-serif;
+
+  --fs-hero: 76px;   /* ตัวเลขพระเอกหน้าแรก */
+  --fs-xl:   34px;   /* ตัวเลข metric */
+  --fs-lg:   24px;   /* หัวข้อหน้า */
+  --fs-md:   17px;   /* เนื้อความหลัก */
+  --fs-sm:   15px;   /* เนื้อความรอง */
+  --fs-xs:   13px;   /* เล็กสุดที่ยอมให้มี */
+
+  /* --- รูปทรง --- */
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  --sp: 18px;
+  --shadow: 0 2px 10px rgba(24,24,27,.06);
+  --shadow-lift: 0 12px 34px rgba(24,24,27,.18);
+
+  /* --- กรอบมือถือ (กว้างขึ้นเพื่อรองรับฟอนต์ใหญ่) --- */
+  --phone-w: 414px;
+  --phone-h: 880px;
+}
+
+body.th { font-family: var(--font-th); }
