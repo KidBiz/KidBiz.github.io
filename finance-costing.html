@@ -1,0 +1,166 @@
+<title>KidBiz Money — ต้นทุนและกำไร</title>
+<style>
+  :root{ --bg:#FFFFFF; --surface:#FAF8F3; --ink:#182720; --muted:#54655B;
+    --green:#0E7A5F; --green-deep:#0A5C48; --gold:#F5B82E; --gold-soft:#FDF3D9;
+    --line:#DFD6C4; --blue:#3F6E97; --red:#C0492F; }
+  @media (prefers-color-scheme: dark){ :root{ --bg:#101A15; --surface:#18251E; --ink:#F1F6F1; --muted:#9DB0A4;
+    --green:#43C79A; --green-deep:#2E9E78; --gold:#F5B82E; --gold-soft:#2C3826; --line:#2A392F; --blue:#77A6CE; --red:#E38266; } }
+  :root[data-theme="dark"]{ --bg:#101A15; --surface:#18251E; --ink:#F1F6F1; --muted:#9DB0A4;
+    --green:#43C79A; --green-deep:#2E9E78; --gold:#F5B82E; --gold-soft:#2C3826; --line:#2A392F; --blue:#77A6CE; --red:#E38266; }
+  :root[data-theme="light"]{ --bg:#FFFFFF; --surface:#FAF8F3; --ink:#182720; --muted:#54655B;
+    --green:#0E7A5F; --green-deep:#0A5C48; --gold:#F5B82E; --gold-soft:#FDF3D9; --line:#DFD6C4; --blue:#3F6E97; --red:#C0492F; }
+  *{box-sizing:border-box; margin:0}
+  body{ background:var(--bg); color:var(--ink);
+    font-family:"Noto Sans Thai","Leelawadee UI","Sukhumvit Set",-apple-system,"Segoe UI",sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased; padding:30px 26px 40px; font-size:1.12rem; }
+  .sheet{max-width:980px; margin:0 auto}
+  header{border-bottom:4px solid var(--green); padding-bottom:14px; margin-bottom:18px}
+  h1{font-size:2rem; font-weight:800}
+  header .sub{font-size:1.02rem; color:var(--muted); margin-top:6px}
+  h2{font-size:1.3rem; font-weight:800; margin:28px 0 12px; display:flex; align-items:center; gap:11px; color:var(--green-deep)}
+  h2 .n{width:32px; height:32px; flex:none; border-radius:8px; background:var(--green); color:#fff; display:grid; place-items:center; font-size:1.05rem}
+
+  .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:12px 0}
+  .card{background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--green); border-radius:11px; padding:15px 16px}
+  .card b{display:block; font-size:1.85rem; font-weight:800; color:var(--green); line-height:1.05; font-variant-numeric:tabular-nums}
+  .card span{font-size:.94rem; color:var(--muted); display:block; margin-top:6px; line-height:1.35}
+
+  table{width:100%; border-collapse:collapse; font-size:1.1rem; margin-top:6px}
+  th,td{padding:10px 13px; border-bottom:1px solid var(--line); text-align:left}
+  th.r,td.r{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+  th{font-size:.95rem; color:var(--muted); font-weight:700; border-bottom:2px solid var(--line)}
+  tr.tot td{font-weight:800; background:var(--gold-soft); border-top:2px solid var(--ink); border-bottom:none; font-size:1.15rem}
+  tr.sub td{color:var(--muted); font-size:1rem}
+  .hi{color:var(--green); font-weight:800}
+  .best{background:rgba(14,122,95,.07)}
+
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px}
+  .box{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+  .box.green{border-left:6px solid var(--green)}
+  .box.blue{border-left:6px solid var(--blue)}
+  .box h3{font-size:1.12rem; font-weight:800; margin-bottom:7px}
+  .box p,.box li{font-size:1.05rem; color:var(--muted); line-height:1.5}
+  .box ul{margin:0; padding-left:20px} .box li{margin-bottom:5px}
+
+  .note{background:var(--surface); border-left:5px solid var(--gold); border-radius:0 10px 10px 0; padding:14px 17px; font-size:1.06rem; margin-top:13px; line-height:1.55}
+  .note.g{border-left-color:var(--green)}
+  .note.r{border-left-color:var(--red)}
+  strong{color:var(--ink)}
+  footer{margin-top:26px; padding-top:14px; border-top:1px solid var(--line); font-size:.95rem; color:var(--muted); line-height:1.5}
+  @media print{ body{padding:0} h2{page-break-after:avoid} table,.cards,.two{page-break-inside:avoid} }
+  @media (max-width:800px){ .cards{grid-template-columns:1fr 1fr} .two{grid-template-columns:1fr} }
+</style>
+
+<div class="sheet">
+<header>
+  <h1>KidBiz Money — ต้นทุนและกำไร</h1>
+  <div class="sub">โปรแกรมสร้างนิสัยการเงิน (ครอบครัว: พ่อ/แม่ + ลูก 13–18 ปี) · <strong>4 ครึ่งวันใน 1 เดือน · 2 class/เดือน = 24 class/ปี</strong> · ก.ค. 2569</div>
+</header>
+
+<div class="cards">
+  <div class="card"><b>42–60%</b><span>อัตรากำไร<br>(โตตามขนาดห้อง)</span></div>
+  <div class="card"><b>28</b><span>ครอบครัว = จุดคุ้มทุน<br>(จากห้อง 50)</span></div>
+  <div class="card"><b>700 ฿</b><span>ต้นทุนผันแปร<br>ต่อ 1 ครอบครัว</span></div>
+  <div class="card"><b>7.6–21.5<span style="font-size:1.1rem"> ล้าน</span></b><span>กำไร/ปี<br>(24 class)</span></div>
+</div>
+
+<div class="note g">
+  💡 <strong>หัวใจของโมเดลนี้:</strong> สอนแบบสัมมนาห้องใหญ่ + ทุกคนเปิดแอปทำตามพร้อมกัน → <strong>วิทยากร 1 คนสอน 50 หรือ 100 ครอบครัว ต้นทุนเกือบเท่ากัน</strong> · เพิ่มคน = กำไรเพิ่มเกือบเต็ม
+</div>
+
+<!-- 1 -->
+<h2><span class="n">1</span> ต้นทุนต่อ 1 class (ห้อง 50 ครอบครัว)</h2>
+<div class="two">
+  <table>
+    <thead><tr><th>ต้นทุนคงที่</th><th class="r">บาท</th></tr></thead>
+    <tbody>
+      <tr><td>วิทยากรนำ + ผู้ช่วย (4 ครั้ง)</td><td class="r">110,000</td></tr>
+      <tr><td>ห้องประชุมใหญ่ + จอ + เครื่องเสียง</td><td class="r">90,000</td></tr>
+      <tr><td>ทีมหน้างาน + ถ่ายทำ</td><td class="r">34,000</td></tr>
+      <tr><td>การตลาด/โฆษณา</td><td class="r">40,000</td></tr>
+      <tr><td>ค่าบริษัทเฉลี่ย (เงินเดือน+ระบบ)</td><td class="r">124,000</td></tr>
+      <tr class="tot"><td>รวมคงที่</td><td class="r">398,000</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr><th>ต้นทุนผันแปร (ต่อครอบครัว)</th><th class="r">บาท</th></tr></thead>
+    <tbody>
+      <tr><td>เอกสาร / สมุดบันทึก / ใบประกาศ</td><td class="r">250</td></tr>
+      <tr><td>ของว่าง 4 ครั้ง (2 คน)</td><td class="r">320</td></tr>
+      <tr><td>ระบบ/แอป ต่อผู้ใช้</td><td class="r">80</td></tr>
+      <tr><td>ของที่ระลึก (โล่/เหรียญตามเป้า)</td><td class="r">50</td></tr>
+      <tr class="tot"><td>รวมต่อครอบครัว</td><td class="r">700</td></tr>
+      <tr class="sub"><td>คนเพิ่ม +4,500 → ต้นทุนเพิ่มแค่ ~350</td><td class="r hi">กำไร ~4,150</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 2 -->
+<h2><span class="n">2</span> กำไรตามขนาดห้อง (ราคาปกติ 14,999/ครอบครัว)</h2>
+<table>
+  <thead><tr><th>&nbsp;</th><th class="r">50 ครอบครัว</th><th class="r">80 ครอบครัว</th><th class="r">100 ครอบครัว</th></tr></thead>
+  <tbody>
+    <tr><td>รายได้</td><td class="r">750,000</td><td class="r">1,200,000</td><td class="r">1,500,000</td></tr>
+    <tr><td>ต้นทุนรวม</td><td class="r">−433,000</td><td class="r">−538,000</td><td class="r">−604,000</td></tr>
+    <tr class="tot"><td>กำไร / class</td><td class="r hi">317,000</td><td class="r hi">662,000</td><td class="r hi">896,000</td></tr>
+    <tr class="sub"><td>อัตรากำไร</td><td class="r">42%</td><td class="r">55%</td><td class="r">60%</td></tr>
+    <tr class="best"><td><strong>กำไรทั้งปี (24 class)</strong></td><td class="r hi">~7.6 ล้าน</td><td class="r hi">~15.9 ล้าน</td><td class="r hi">~21.5 ล้าน</td></tr>
+  </tbody>
+</table>
+<div class="note">ห้องใหญ่ขึ้น = ค่าห้อง/ทีมงานเพิ่ม (+84,000 ที่ 80 · +136,000 ที่ 100) <strong>แต่รายได้เพิ่มเร็วกว่ามาก</strong> → มาร์จินโตขึ้นเรื่อย ๆ</div>
+
+<!-- 3 -->
+<h2><span class="n">3</span> จุดคุ้มทุน — ต้องขายกี่ครอบครัว</h2>
+<table>
+  <thead><tr><th>ราคา</th><th class="r">ห้อง 50</th><th class="r">ห้อง 80</th><th class="r">ห้อง 100</th></tr></thead>
+  <tbody>
+    <tr><td>Early Bird 12,999</td><td class="r">33</td><td class="r">40</td><td class="r">44</td></tr>
+    <tr class="tot"><td>ปกติ 14,999</td><td class="r">28 <span style="font-weight:600;font-size:.95rem">(56%)</span></td><td class="r">34</td><td class="r">37</td></tr>
+  </tbody>
+</table>
+<div class="note g">
+  🟢 <strong>ลูกค้าจ่ายล่วงหน้าก่อนเริ่มเรียน</strong> → รู้ยอดจองก่อนจ่ายค่าห้องและวิทยากร · <strong>เลื่อนรอบได้ถ้ายอดไม่ถึงเป้า จึงแทบไม่มีทางขาดทุนหนัก</strong>
+</div>
+
+<!-- 4 -->
+<h2><span class="n">4</span> ทำไมสินค้านี้สเกลได้ดีกว่า</h2>
+<table>
+  <thead><tr><th>&nbsp;</th><th class="r">Business Camp</th><th class="r">Money Program</th></tr></thead>
+  <tbody>
+    <tr><td>ราคา / หน่วยขาย</td><td class="r">25,000 / คน</td><td class="r">14,999 / <strong>ครอบครัว</strong></td></tr>
+    <tr><td>ความจุต่อรอบ</td><td class="r">30 คน</td><td class="r hi">50–100 ครอบครัว</td></tr>
+    <tr><td>ต้นทุนผันแปร/หน่วย</td><td class="r">~3,900</td><td class="r hi">700</td></tr>
+    <tr><td>อัตรากำไร</td><td class="r">~26%</td><td class="r hi">42–60%</td></tr>
+    <tr class="tot"><td>ตัวจำกัดการเติบโต</td><td class="r">อัตราพี่เลี้ยง 1:2.3</td><td class="r">ขนาดห้อง + ดีมานด์</td></tr>
+  </tbody>
+</table>
+<div class="note">
+  💎 Business Camp <strong>ต้นทุนโตตามจำนวนเด็ก</strong> (ต้องเพิ่มพี่เลี้ยง/ห้องพัก) · Money Program <strong>ต้นทุนแทบไม่โต</strong> เพราะแอปทำหน้าที่ดูแลรายคนแทนคน
+</div>
+
+<!-- 5 -->
+<h2><span class="n">5</span> ความเสี่ยง &amp; สิ่งที่ต้องยืนยัน</h2>
+<div class="two">
+  <div class="box blue">
+    <h3>⚠️ ความเสี่ยง</h3>
+    <ul>
+      <li><strong>ดีมานด์คือตัวแปรเดียว</strong> — ต้องได้ 28+ ครอบครัว/class (~800 ครอบครัว/ปี) · ต้นทุนต่ำแล้ว ความเสี่ยงย้ายมาอยู่ที่การเติมห้อง</li>
+      <li><strong>คนหลุดกลางเดือน</strong> (4 ครั้งเว้นระยะ) → เก็บเงินเต็มล่วงหน้า + แอปเตือน + พ่อแม่เป็นตัวยึด</li>
+      <li><strong>คู่แข่งฟรี</strong> → ไม่ขาย “ความรู้การเงิน” แต่ขาย “เปลี่ยนนิสัย + วัดผล + พ่อแม่ร่วม”</li>
+    </ul>
+  </div>
+  <div class="box green">
+    <h3>📋 ต้องยืนยันก่อนล็อกราคา</h3>
+    <ul>
+      <li>ใบเสนอราคาห้องประชุม 100–200 คน × 4 ครึ่งวัน (+จอ/เครื่องเสียง)</li>
+      <li>ค่าตัววิทยากรนำจริง (ตั้งไว้ 27,500/ครั้ง)</li>
+      <li><strong>ต้นทุนหาลูกค้าจริง</strong> (ตั้งไว้ 800/ครอบครัว) ← สำคัญสุด</li>
+      <li>ค่าปรับแอปเป็น production + hosting รายเดือน</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  ตัวเลขเป็นประมาณการ ยังไม่ผ่านการสอบบัญชี · สมมติฐาน: เงินเดือนผู้ก่อตั้ง 150,000 + Operations 35,000/เดือน · แอปสร้างเสร็จแล้ว (ไม่มีต้นทุนพัฒนาก้อนใหญ่) · แขกรับเชิญคนดังยังไม่รวมในงบ (เป็นงบการตลาดเสริมเฉพาะ class เปิดตัว) · KidBiz (ชื่อชั่วคราว)
+</footer>
+</div>
