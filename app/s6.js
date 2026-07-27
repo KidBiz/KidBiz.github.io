@@ -63,7 +63,7 @@ css: `
 `,
 
 render() {
-  const p = KB.s.parent, now = KB.ladderNow(), pend = KB.pending();
+  const p = KB.s.parent, pend = KB.pending(), item = KB.goalSmallItem();
 
   return `
   <div class="phead">
@@ -71,10 +71,22 @@ render() {
     <div class="g">
       <div><b>${KB.coverage()}%</b><small>${L("covered by them", "หาเองได้")}</small></div>
       <div><b>${KB.savingRate()}%</b><small>${L("savings rate", "อัตราออม")}</small></div>
-      <div><b>${KB.pauseRate()}%</b><small>${L("looked first", "คิดก่อนซื้อ")}</small></div>
+      <div><b>${KB.practiceCount()}</b><small>${L("times practised", "ครั้งที่ฝึกคิด")}</small></div>
     </div>
-    <div class="lvbar"><i style="width:${now.lv / 5 * 100}%"></i></div>
-    <div class="cap">${L("Goal Ladder", "บันไดเป้าหมาย")} ${now.lv}/5 · ${LT(now.t)}</div>
+    <div class="lvbar"><i style="width:${KB.goalSmallPct()}%"></i></div>
+    <div class="cap">${MEDAL("silver",15)} ${L(`Small goal — ${LT(item.name).toLowerCase()} ${KB.goalSmallPct()}%`,
+                            `เป้าเล็ก — ${LT(item.name)} ${KB.goalSmallPct()}%`)}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">${I("target", 18)} ${L("Their small goal", "เป้าเล็กของลูก")}</div>
+    <div class="tiny muted" style="margin-bottom:12px">${L(
+      "Pick one expense you already pay. Your child earning toward it doesn't mean you stop paying — it means you carry less, and they can see exactly how much less.",
+      "เลือกค่าใช้จ่าย 1 รายการที่คุณจ่ายอยู่แล้ว การที่ลูกหาเงินมา cover ไม่ได้แปลว่าคุณจะหยุดจ่าย แต่แปลว่าคุณเบาลง และลูกเห็นชัดว่าเบาลงเท่าไหร่")}</div>
+    <div class="chips" id="goalpick">
+      ${KB.s.costItems.filter(c => c.source === "parent").map(c =>
+        `<button class="chip ${c.id === KB.s.goalSmallItemId ? "on" : ""}" data-goal="${c.id}">${LT(c.name)} · ${KB.baht(c.perMonth)}</button>`).join("")}
+    </div>
   </div>
 
   <div class="card">
@@ -136,6 +148,11 @@ mount(el) {
   el.querySelectorAll("[data-no]").forEach(b => b.onclick = () => {
     KB.verifyIncome(+b.dataset.no, false); render();
     toast(L("Not counted as earned · your child will see why", "ไม่นับเป็นรายได้จากงาน · ลูกจะเห็นเหตุผลในแอป"));
+  });
+  el.querySelectorAll("[data-goal]").forEach(b => b.onclick = () => {
+    KB.s.goalSmallItemId = b.dataset.goal; KB.save(); render();
+    toast(L(`Small goal is now the ${LT(KB.goalSmallItem().name).toLowerCase()}`,
+            `ตั้งเป้าเล็กเป็น${LT(KB.goalSmallItem().name)}แล้ว`));
   });
   el.querySelectorAll("[data-mis]").forEach(b => b.onclick = () => {
     const m = KB.s.parent.missions[+b.dataset.mis]; m.done = !m.done; KB.save(); render();

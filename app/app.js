@@ -4,11 +4,12 @@
    ============================================================ */
 
 const TABS = [
-  { id: "s1", ic: "home",      t: { en: "Home",      th: "หน้าแรก" } },
-  { id: "s4", ic: "envelope",  t: { en: "Envelopes", th: "ซองเงิน" } },
-  { id: "s5", ic: "clipboard", t: { en: "Weekly",    th: "สรุปสัปดาห์" } },
-  { id: "s7", ic: "chart",     t: { en: "Progress",  th: "ความก้าวหน้า" } },
-  { id: "s6", ic: "family",    t: { en: "Parents",   th: "พ่อแม่" } }
+  { id: "s1",  ic: "home",      t: { en: "Home",      th: "หน้าแรก" } },
+  { id: "s4",  ic: "envelope",  t: { en: "Envelopes", th: "ซองเงิน" } },
+  { id: "s5",  ic: "clipboard", t: { en: "Weekly",    th: "สัปดาห์" } },
+  { id: "s2c", ic: "book",      t: { en: "Lessons",   th: "บทเรียน" } },
+  { id: "s7",  ic: "chart",     t: { en: "Progress",  th: "ก้าวหน้า" } },
+  { id: "s6",  ic: "family",    t: { en: "Parents",   th: "พ่อแม่" } }
 ];
 
 let cur = "s1";

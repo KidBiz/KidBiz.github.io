@@ -58,8 +58,23 @@ const ICONS = {
   phone:     '<rect x="6.6" y="2.7" width="10.8" height="18.6" rx="2.5"/><path d="M10.6 18.6h2.8"/>',
   coin:      '<circle cx="12" cy="12" r="8.3"/><path d="M14.6 9.3c-.6-.8-1.5-1.2-2.6-1.2-1.5 0-2.6.8-2.6 1.9s1.1 1.8 2.6 2 2.6.8 2.6 2-1.1 1.9-2.6 1.9c-1.1 0-2-.4-2.6-1.2"/><path d="M12 6.5v11"/>',
   inbox:     '<path d="M3.5 10.7 12 4.4l8.5 6.3v7.9a2.1 2.1 0 0 1-2.1 2.1H5.6a2.1 2.1 0 0 1-2.1-2.1Z"/><path d="m3.5 10.7 8.5 5.9 8.5-5.9"/>',
-  eye:       '<path d="M2.4 12S6 5.6 12 5.6 21.6 12 21.6 12 18 18.4 12 18.4 2.4 12 2.4 12Z"/><circle cx="12" cy="12" r="2.9"/>'
+  eye:       '<path d="M2.4 12S6 5.6 12 5.6 21.6 12 21.6 12 18 18.4 12 18.4 2.4 12 2.4 12Z"/><circle cx="12" cy="12" r="2.9"/>',
+
+  /* --- เพิ่มรอบสเปค 2026-07-27 --- */
+  certificate: '<rect x="3.2" y="3.6" width="17.6" height="13" rx="2.2"/><path d="M6.8 7.6h6.4M6.8 10.8h4.2"/><circle cx="16.6" cy="11.4" r="2.4"/><path d="m14.9 13.4-.7 4 2.4-1.3 2.4 1.3-.7-4"/>',
+  book:        '<path d="M4.2 4.6a1.6 1.6 0 0 1 1.6-1.6H18a1.4 1.4 0 0 1 1.4 1.4v13.4"/><path d="M4.2 4.6v13.6a2.8 2.8 0 0 0 2.8 2.8h12.4"/><path d="M7 21a2.8 2.8 0 0 1 0-5.6h12.4"/>',
+  loan:        '<path d="M3.4 12.6a8.6 8.6 0 0 1 8.6-8.6 8.6 8.6 0 0 1 8.6 8.6"/><path d="M3.4 12.6v.4a3 3 0 0 0 3 3h1.4l1.4 4.6h4.6l1.4-4.6h1.4a3 3 0 0 0 3-3v-.4"/><path d="M12 8.2v3.4M10.3 9.9h3.4"/>',
+  repeat:      '<path d="M4 8.6h12.4a3.4 3.4 0 0 1 3.4 3.4v.6"/><path d="m7.2 5.4-3.2 3.2 3.2 3.2"/><path d="M20 15.4H7.6a3.4 3.4 0 0 1-3.4-3.4v-.6"/><path d="m16.8 18.6 3.2-3.2-3.2-3.2"/>',
+  calendarDays:'<rect x="3.6" y="5.3" width="16.8" height="15.1" rx="2.3"/><path d="M3.6 10h16.8M8.4 3.3v3.7M15.6 3.3v3.7"/><circle cx="8.4" cy="13.6" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="13.6" r=".9" fill="currentColor" stroke="none"/><circle cx="15.6" cy="13.6" r=".9" fill="currentColor" stroke="none"/><circle cx="8.4" cy="17" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/>',
+  arrowDown:   '<path d="M12 4.4v15.2"/><path d="m5.8 13.4 6.2 6.2 6.2-6.2"/>',
+  lift:        '<path d="M12 20.4V6.2"/><path d="m5.6 12.6 6.4-6.4 6.4 6.4"/><path d="M4.6 3.4h14.8"/>'
 };
+
+/** เหรียญเป้าเล็ก (เงิน) / เป้าใหญ่ (ทอง) — วาดเอง ไม่ใช้ emoji 🥈🥇
+    เพราะ emoji เหรียญหน้าตาต่างกันมากในแต่ละ OS และคุมสีไม่ได้ */
+function MEDAL(kind, size = 18) {
+  return `<span class="medal" style="color:${kind === "gold" ? "#D9A82C" : "#9AA0A6"}">${I("medal", size)}</span>`;
+}
 
 /** สร้าง <svg> ของไอคอน — สืบสีจากตัวอักษรที่ครอบอยู่ */
 function I(name, size = 20) {
