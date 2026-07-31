@@ -72,6 +72,12 @@ css: `
 .class .line { font-size: var(--fs-sm); color: #C3C3CC; line-height: 1.85; margin-bottom: 22px; }
 .class .safe { display: inline-flex; align-items: center; gap: 7px; font-size: var(--fs-xs); font-weight: 700; color: #4FD9EC;
   background: rgba(79,217,236,.14); padding: 10px 15px; border-radius: var(--r-pill); margin-bottom: 22px; }
+/* คำถามเปิดคาบ + 3 สถานการณ์ · ไม่มีอันไหนถูกทำให้ดูแย่ ต่างกันแค่ "อันนี้คือของเรา" */
+.class .ask { font-size: var(--fs-md); font-weight: 700; line-height: 1.5; margin: 0 0 14px; }
+.class .sits { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+.class .sit { font-size: var(--fs-xs); font-weight: 700; padding: 8px 13px; border-radius: var(--r-pill);
+  background: rgba(255,255,255,.08); color: #A9A9B4; }
+.class .sit.on { background: var(--c-fill); color: #fff; }
 `,
 
 render(ctx) {
@@ -82,11 +88,20 @@ render(ctx) {
     return `<div class="delta ${x > 0 ? "up" : "flat"}">${x > 0 ? "↑" : x < 0 ? "↓" : "→"} ${Math.abs(x)} ${L("from last week", "จากสัปดาห์ก่อน")}</div>`;
   };
 
-  /* --- โหมดคาบเรียน: % ล้วน ไม่มียอดบาท --- */
+  /* --- โหมดคาบเรียน: % ล้วน ไม่มียอดบาท ---
+     รีวิวเปิดคาบ 3 สถานการณ์ · ไม่มีอันไหน "ผิด" — 0 คือจุดตั้งต้นที่ยอมรับได้ ไม่ใช่คำตำหนิ */
+  const sits = [!KB.incomeTotal(), KB.goalSmallDone(), KB.goalBigDone()];
   if (ctx.stage === "class") return `
   <div class="class">
     <div class="hd">${L("WEEKLY CARD", "สรุปสัปดาห์")}</div>
     <h2>${L(`Week ${KB.s.child.week} · ${LT(KB.s.child.name)}`, `สัปดาห์ที่ ${KB.s.child.week} · ${LT(KB.s.child.name)}`)}</h2>
+    <div class="ask">${L("Did money come in? Did the jar fill up?", "รายได้เข้ามั้ย? โหลค่าใช้จ่ายเต็มขึ้นไหม?")}</div>
+    <div class="sits">
+      ${[L("Nothing came in", "หาไม่ได้เลย"),
+         L("Small goal covered", "cover เป้าเล็กได้"),
+         L("Jar full", "โหลเต็ม")]
+        .map((t, i) => `<div class="sit ${sits[i] ? "on" : ""}">${t}</div>`).join("")}
+    </div>
     <div class="g">
       <div><b>${cov}%</b><small>${L("covered by me", "หาเองได้")}</small><div class="up">↑ ${cov - lw.coverage}</div></div>
       <div><b>${sav}%</b><small>${L("savings rate", "อัตราออม")}</small><div class="up">↑ ${sav - lw.saving}</div></div>
@@ -94,7 +109,7 @@ render(ctx) {
       <div><b>${KB.s.streak.weeks}</b><small>${L("weeks running", "สัปดาห์ต่อเนื่อง")}</small><div class="up">↑ ${KB.s.streak.weeks - lw.streak}</div></div>
     </div>
     <div class="line">${L(`Needed ${need}% : wanted ${100 - need}%`, `จำเป็น ${need}% : อยากได้ ${100 - need}%`)}<br>
-      ${MEDAL("silver",15)} ${L(`Small goal ${KB.goalSmallPct()}%`, `เป้าเล็ก ${KB.goalSmallPct()}%`)} · ${MEDAL("gold",15)} ${L(`Big goal ${cov}%`, `เป้าใหญ่ ${cov}%`)}<br>
+      ${KB.goals().map((g, i, a) => `${MEDAL_FOR(i, a.length, 15)} ${LT(g.name)} ${g.pct}%`).join(" · ")}<br>
       ${L("Ran out early:", "ซองที่หมดก่อนกำหนด:")} ${KB.emptyEnvs().length ? KB.emptyEnvs().map(e => LT(e.name)).join(", ") : L("none", "ไม่มี")}</div>
     <div class="safe">${I("lock", 15)} ${L("Checked — no baht amounts on this screen", "ตรวจแล้ว — ไม่มียอดเงินบาทในหน้านี้")}</div>
     <button class="btn ghost" data-stage="">${L("Leave class mode", "ออกจากโหมดคาบเรียน")}</button>

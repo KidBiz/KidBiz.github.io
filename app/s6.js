@@ -79,13 +79,16 @@ render() {
   </div>
 
   <div class="card">
-    <div class="card-t">${I("target", 18)} ${L("Their small goal", "เป้าเล็กของลูก")}</div>
+    <div class="card-t">${I("target", 18)} ${L("Their step goals", "เป้าหมายเป็นขั้นของลูก")}
+      <span class="r">${KB.s.goalTiers.length + 1} ${L("goals", "เป้า")}</span></div>
     <div class="tiny muted" style="margin-bottom:12px">${L(
-      "Pick one expense you already pay. Your child earning toward it doesn't mean you stop paying — it means you carry less, and they can see exactly how much less.",
-      "เลือกค่าใช้จ่าย 1 รายการที่คุณจ่ายอยู่แล้ว การที่ลูกหาเงินมา cover ไม่ได้แปลว่าคุณจะหยุดจ่าย แต่แปลว่าคุณเบาลง และลูกเห็นชัดว่าเบาลงเท่าไหร่")}</div>
+      "Pick the expenses you already pay that become their step goals, cheapest first. Their earnings fill each one in turn, and the last goal is always the whole month. Them covering a bill doesn't mean you stop paying it — it means you carry less, and they see exactly how much less.",
+      "เลือกค่าใช้จ่ายที่คุณจ่ายอยู่แล้ว ให้เป็นเป้าหมายไล่ขั้นของลูก เรียงจากถูกไปแพง รายได้ของลูกจะเติมทีละขั้น และเป้าสุดท้ายคือค่าใช้จ่ายทั้งเดือนเสมอ การที่ลูก cover รายการไหนได้ ไม่ได้แปลว่าคุณหยุดจ่าย แต่แปลว่าคุณเบาลง และลูกเห็นชัดว่าเบาลงเท่าไหร่")}</div>
     <div class="chips" id="goalpick">
-      ${KB.s.costItems.filter(c => c.source === "parent").map(c =>
-        `<button class="chip ${c.id === KB.s.goalSmallItemId ? "on" : ""}" data-goal="${c.id}">${LT(c.name)} · ${KB.baht(c.perMonth)}</button>`).join("")}
+      ${KB.s.costItems.filter(c => c.source === "parent").map(c => {
+        const on = KB.s.goalTiers.includes(c.id);
+        return `<button class="chip ${on ? "on" : ""}" data-goal="${c.id}">${on ? "✓ " : ""}${LT(c.name)} · ${KB.baht(c.perMonth)}</button>`;
+      }).join("")}
     </div>
   </div>
 
@@ -150,9 +153,18 @@ mount(el) {
     toast(L("Not counted as earned · your child will see why", "ไม่นับเป็นรายได้จากงาน · ลูกจะเห็นเหตุผลในแอป"));
   });
   el.querySelectorAll("[data-goal]").forEach(b => b.onclick = () => {
-    KB.s.goalSmallItemId = b.dataset.goal; KB.save(); render();
-    toast(L(`Small goal is now the ${LT(KB.goalSmallItem().name).toLowerCase()}`,
-            `ตั้งเป้าเล็กเป็น${LT(KB.goalSmallItem().name)}แล้ว`));
+    const id = b.dataset.goal, t = KB.s.goalTiers;
+    if (t.includes(id)) {
+      if (t.length === 1) return toast(L("Keep at least one step goal", "ต้องเหลือเป้าขั้นไว้อย่างน้อย 1 อัน"));
+      KB.s.goalTiers = t.filter(x => x !== id);
+    } else {
+      KB.s.goalTiers = [...t, id];
+    }
+    /* เรียงจากถูกไปแพง เพื่อให้ชั้นล่างสุดคือชั้นที่ถึงก่อนเสมอ */
+    const cost = x => (KB.s.costItems.find(c => c.id === x) || {}).perMonth || 0;
+    KB.s.goalTiers.sort((a, c) => cost(a) - cost(c));
+    KB.save(); render();
+    toast(L(`${KB.s.goalTiers.length + 1} goals now`, `ตอนนี้มี ${KB.s.goalTiers.length + 1} เป้าหมาย`));
   });
   el.querySelectorAll("[data-mis]").forEach(b => b.onclick = () => {
     const m = KB.s.parent.missions[+b.dataset.mis]; m.done = !m.done; KB.save(); render();

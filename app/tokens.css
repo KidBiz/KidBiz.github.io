@@ -36,11 +36,18 @@
   --c-well-d:    #18181B;
   --c-well-line: #45454E;
 
-  /* --- ซองเงิน 4 ซอง --- */
-  --c-need:  var(--brand-teal);
-  --c-save:  var(--brand-magenta);
-  --c-spend: var(--brand-amber);
-  --c-share: #5A5A66;
+  /* --- ชั้นเป้าหมายบนแท่งหน้าแรก (ล่าง → บน) --- */
+  --c-tier1:   var(--brand-amber);   /* ชั้นล่างสุด — ถึงก่อน */
+  --c-tier2:   var(--brand-teal);
+  --c-tier3:   #0A6E85;              /* ส่วนที่เหลือของเดือน */
+  --c-tier-sur: var(--brand-magenta);/* เหนือเส้น 100% = เงินส่วนเกิน */
+
+  /* --- ซองเงิน 5 ซอง --- */
+  --c-need:   var(--brand-teal);
+  --c-save:   var(--brand-magenta);
+  --c-buffer: #3D7AB8;   /* สำรองฉุกเฉิน — น้ำเงินนิ่ง ไม่แย่งสายตากับซองออม */
+  --c-spend:  var(--brand-amber);
+  --c-share:  #5A5A66;
 
   /* --- โทนอื่น --- */
   --c-pause:      var(--brand-amber);

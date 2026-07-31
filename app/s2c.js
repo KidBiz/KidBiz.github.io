@@ -1,16 +1,17 @@
 /* ============================================================
    S2c — เมนูบทเรียนรายวัน (C9)
-   Day 1-4 · วันที่ยังไม่ถึง = ล็อก · แต่ละวันมี บทเรียน / ฟีเจอร์ที่ปลดล็อก /
+   Day 1-5 · วันที่ยังไม่ถึง = ล็อก · แต่ละวันมี บทเรียน / ฟีเจอร์ที่ปลดล็อก /
    ภารกิจเด็ก / ภารกิจพ่อแม่ / งานวิจัยเบื้องหลัง
+   จำนวนวันอ่านจาก KB.s.lessons.length เสมอ ห้ามฮาร์ดโค้ดเลขวันอีก
    ============================================================ */
 
 SCREENS.s2c = {
 title: () => L("Lessons", "บทเรียน"),
-sub: () => L(`${KB.s.lessons.filter(l => l.done).length} of 4 days done`,
-             `เรียนแล้ว ${KB.s.lessons.filter(l => l.done).length} จาก 4 วัน`),
+sub: () => L(`${KB.s.lessons.filter(l => l.done).length} of ${KB.s.lessons.length} days done`,
+             `เรียนแล้ว ${KB.s.lessons.filter(l => l.done).length} จาก ${KB.s.lessons.length} วัน`),
 notes: () => [
-  [L("One thread", "เส้นเรื่องเดียว"), L("All four days answer the same question — did the hole get shallower? Each day opens with it, so the app and the classroom never drift apart.",
-      "ทั้ง 4 วันตอบคำถามเดียวกัน — หลุมตื้นลงไหม ทุกวันเปิดด้วยคำถามนี้ แอปกับห้องเรียนจึงไม่หลุดจากกัน")],
+  [L("One thread", "เส้นเรื่องเดียว"), L("All five days answer the same question — did money come in, and did the jar fill up? Each day opens with it, so the app and the classroom never drift apart.",
+      "ทั้ง 5 วันตอบคำถามเดียวกัน — รายได้เข้ามั้ย โหลค่าใช้จ่ายเต็มขึ้นไหม ทุกวันเปิดด้วยคำถามนี้ แอปกับห้องเรียนจึงไม่หลุดจากกัน")],
   [L("Locked on purpose", "ล็อกโดยตั้งใจ"), L("Days ahead stay closed so each session has something genuinely new to teach and nobody is overwhelmed on day one.",
       "วันที่ยังไม่ถึงถูกปิดไว้ เพื่อให้แต่ละคาบมีของใหม่ให้สอนจริงๆ และไม่ทำให้เด็กท่วมตั้งแต่วันแรก")],
   [L("Parents have homework too", "พ่อแม่ก็มีการบ้าน"), L("The child can see the parent's missions for each day. Seeing that the adult is also being asked to change is part of what makes it work.",

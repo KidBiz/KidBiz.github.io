@@ -132,8 +132,8 @@ render() {
   <div class="cert">
     <div class="lb">CERTIFICATE OF COMPLETION</div>
     <h3>${LT(KB.s.child.name)}</h3>
-    <div class="who">${L(`KidFinance · four-day programme · ${LT(KB.s.child.grade)}`,
-                         `KidFinance · โปรแกรม 4 วัน · ${LT(KB.s.child.grade)}`)}</div>
+    <div class="who">${L(`KidFinance · five-day programme · ${LT(KB.s.child.grade)}`,
+                         `KidFinance · โปรแกรม 5 วัน · ${LT(KB.s.child.grade)}`)}</div>
     <div class="comp">${L("FINANCIAL COMPETENCIES DEMONSTRATED", "สมรรถนะทางการเงินที่ผ่าน")}</div>
     <ul>${comps.map(c => `<li>${I("check", 15)}<span>${LT(c)}</span></li>`).join("")}</ul>
     <div class="acts">
@@ -148,26 +148,20 @@ render() {
   <div class="card-t" style="margin:0 0 11px;font-size:var(--fs-md)">${I("medal", 19)} ${L("Goal awards", "รางวัลตามเป้าหมาย")}
     <span class="r">${L("handed over on day 4", "รับในพิธีวันที่ 4")}</span></div>
 
-  <div class="award ${KB.goalSmallDone() ? "" : "locked"}">
-    ${MEDAL("silver")}
+  ${KB.goals().map((g, i, arr) => `
+  <div class="award ${g.done ? "" : "locked"}">
+    ${MEDAL_FOR(i, arr.length, 34)}
     <div class="tx">
-      <div class="tt">${L("Lightened the load at home", "ช่วยลดภาระที่บ้านได้")}</div>
-      <div class="ds">${L(`Covered the ${LT(KB.goalSmallItem().name).toLowerCase()} — a real medal, given at the ceremony`,
-                          `cover ${LT(KB.goalSmallItem().name)} ได้ — เหรียญของจริง มอบในพิธี`)}</div>
-      <div class="st">${KB.goalSmallDone() ? L("Reached ✓", "ถึงเป้าแล้ว ✓")
-                                            : L(`${KB.goalSmallPct()}% of the way`, `ไปได้ ${KB.goalSmallPct()}%`)}</div>
+      <div class="tt">${g.isTotal ? L("Covered myself", "เลี้ยงตัวเองได้")
+                                  : L(`Covered the ${LT(g.name).toLowerCase()}`, `cover ${LT(g.name)} ได้`)}</div>
+      <div class="ds">${g.isTotal
+        ? L("Everything it costs to be you, for a whole month", "ค่าใช้จ่ายของตัวเองทั้งหมด ครบทั้งเดือน")
+        : L(`${KB.baht(g.cost)} a month lifted off your parents — a real medal, given at the ceremony`,
+            `แบ่งเบาพ่อแม่เดือนละ ${KB.baht(g.cost)} — เหรียญของจริง มอบในพิธี`)}</div>
+      <div class="st">${g.done ? L("Reached ✓", "ถึงเป้าแล้ว ✓")
+                               : L(`${g.pct}% of the way`, `ไปได้ ${g.pct}%`)}</div>
     </div>
-  </div>
-
-  <div class="award ${KB.goalBigDone() ? "" : "locked"}">
-    ${MEDAL("gold")}
-    <div class="tx">
-      <div class="tt">${L("Covered myself", "เลี้ยงตัวเองได้")}</div>
-      <div class="ds">${L("Covered everything it costs to be you", "cover ค่าใช้จ่ายของตัวเองได้ทั้งหมด")}</div>
-      <div class="st">${KB.goalBigDone() ? L("Reached ✓", "ถึงเป้าแล้ว ✓")
-                                         : L(`${KB.coverage()}% of the way`, `ไปได้ ${KB.coverage()}%`)}</div>
-    </div>
-  </div>
+  </div>`).join("")}
 
   <div class="ceremony">${I("family", 19)}<div>${L(
     "At the ceremony the <b>parent</b> hands over the medal, not the instructor — this award is about a child lightening the load at home, so the thank-you should come from the person who felt it.",

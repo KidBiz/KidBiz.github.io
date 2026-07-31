@@ -11,8 +11,8 @@ sheetTitle: c => c.skipAsk ? L("Log what I spent", "บันทึกเงิ�
 notes: () => [
   [L("An exercise, not a gate", "แบบฝึกหัด ไม่ใช่ด่าน"), L("Nobody opens an app before every purchase, so this is not built as a checkpoint. Both buttons at the end count equally — we measure practising the thinking, not resisting the purchase.",
       "ไม่มีใครเปิดแอปก่อนซื้อของทุกครั้ง หน้านี้จึงไม่ได้ทำเป็นด่าน ปุ่มทั้งสองท้ายสุดนับเท่ากัน เพราะเราวัดการได้ฝึกคิด ไม่ได้วัดการอดใจไม่ซื้อ")],
-  [L("Recurring is the real lesson", "ค่าใช้จ่ายต่อเนื่องคือบทเรียนจริง"), L("A one-off empties a pocket. A subscription raises the ceiling on what you cost, every day, forever — shown as the hole getting permanently deeper.",
-      "ของชิ้นเดียวทำให้กระเป๋าพร่อง แต่ค่าบริการรายเดือนทำให้เพดานค่าใช้จ่ายของเราสูงขึ้นทุกวันไปตลอด แสดงให้เห็นเป็นหลุมที่ลึกลงถาวร")],
+  [L("Recurring is the real lesson", "ค่าใช้จ่ายต่อเนื่องคือบทเรียนจริง"), L("A one-off empties a pocket. A subscription raises the ceiling on what you cost, every day, forever — shown as the jar getting permanently bigger, so the same income fills less of it.",
+      "ของชิ้นเดียวทำให้กระเป๋าพร่อง แต่ค่าบริการรายเดือนทำให้เพดานค่าใช้จ่ายของเราสูงขึ้นทุกวันไปตลอด แสดงให้เห็นเป็นโหลที่ใหญ่ขึ้นถาวร รายได้เท่าเดิมจึงเติมได้น้อยลง")],
   [L("Third category", "ทางเลือกที่สาม"), L("'Could earn me money' sits beside need and want. It is the bridge to the business side of the programme — some spending is an investment.",
       "'มีโอกาสสร้างรายได้' วางคู่กับจำเป็นและไม่จำเป็น เป็นสะพานไปฝั่งธุรกิจของโปรแกรม — รายจ่ายบางอย่างคือการลงทุน")]
 ],
@@ -40,17 +40,22 @@ css: `
 .cmp .tx { flex: 1; font-size: var(--fs-sm); color: var(--c-ink-2); line-height: 1.45; }
 .cmp .vl { font-size: 27px; font-weight: 700; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
 
-/* --- ผลกระทบของค่าใช้จ่ายต่อเนื่อง: หลุมก่อน-หลัง --- */
+/* --- ผลกระทบของค่าใช้จ่ายต่อเนื่อง: โหลก่อน-หลัง ---
+   โหล 2 ใบวางบนเส้นเดียวกัน ใบหลัง "สูงกว่า" จริงตามสัดส่วนต้นทุน/วัน
+   รายได้เท่าเดิม → น้ำเท่าเดิม แต่โหลใหญ่ขึ้น → % เต็มลดลง เห็นสองอย่างพร้อมกัน */
 .deeper { background: var(--c-ink); border-radius: var(--r-md); padding: 17px; margin-bottom: 14px; color: #fff; }
 .deeper h4 { font-size: var(--fs-md); font-weight: 700; margin-bottom: 4px; }
 .deeper p { font-size: var(--fs-xs); color: #A9A9B4; line-height: 1.55; margin-bottom: 14px; }
-.holes { display: flex; align-items: flex-end; gap: 14px; }
-.holes .h { flex: 1; text-align: center; }
-.holes .pit { height: 92px; border-radius: 6px 6px 12px 12px; background: rgba(255,255,255,.09); position: relative; overflow: hidden; }
-.holes .pit i { position: absolute; left: 0; right: 0; bottom: 0; background: var(--c-fill); display: block; transition: height .7s cubic-bezier(.2,.9,.25,1); }
-.holes .lb { font-size: var(--fs-xs); font-weight: 700; margin-top: 8px; color: #C3C3CC; }
-.holes .vv { font-size: 19px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
-.holes .arrow { color: var(--brand-amber); padding-bottom: 34px; }
+.s2jars { display: flex; align-items: flex-end; gap: 14px; }
+.s2jars .h { flex: 1; text-align: center; }
+.s2jars .rim { height: 3px; border-radius: 2px; background: rgba(255,255,255,.32); margin: 0 16% 3px; }
+.s2jars .jar { border-radius: 5px 5px 13px 13px; background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.24); position: relative; overflow: hidden;
+  transition: height .7s cubic-bezier(.2,.9,.25,1); }
+.s2jars .jar i { position: absolute; left: 0; right: 0; bottom: 0; background: var(--c-fill); display: block; transition: height .7s cubic-bezier(.2,.9,.25,1); }
+.s2jars .lb { font-size: var(--fs-xs); font-weight: 700; margin-top: 8px; color: #C3C3CC; }
+.s2jars .vv { font-size: 19px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+.s2jars .arrow { color: var(--brand-amber); padding-bottom: 34px; transform: rotate(-90deg); }
 .deeper .note { font-size: var(--fs-sm); color: var(--brand-amber); font-weight: 700; margin-top: 14px; line-height: 1.5; }
 
 .twin { display: flex; gap: 11px; }
@@ -129,7 +134,13 @@ render(ctx) {
     const before = KB.dailyCost();
     const after = rec ? Math.round((KB.monthlyCost() + rec) / 30) : before;
     const covNow = KB.coverage();
-    const covAfter = rec ? KB.pct(KB.incomeTotal(), after * KB.s.child.daysElapsed) : covNow;
+    /* ต้องวัดฐานเดียวกับ KB.coverage() (รายได้เดือนนี้ ÷ ค่าใช้จ่ายทั้งเดือน)
+       ถ้าใช้ค่าใช้จ่ายสะสมถึงวันนี้เป็นตัวหาร ตัวเลข "หลังซื้อ" จะโผล่มาสูงกว่า "ตอนนี้"
+       ทั้งที่ควรลดลง — คนละตัวหารกัน เทียบกันไม่ได้ */
+    const covAfter = rec ? Math.min(100, KB.pct(KB.monthIncome(), KB.monthCost() + rec)) : covNow;
+    /* ความสูงโหล = สัดส่วนต้นทุน/วันจริง · ตัดที่ 118px กันโหลทะลุการ์ดเมื่อสมัครของแพงมาก */
+    const jarNow = 80;
+    const jarAfter = before ? Math.min(118, Math.round(jarNow * after / before)) : jarNow;
 
     return `
     <div class="q">${KB.baht(amt)} <span class="muted" style="font-weight:500;font-size:var(--fs-md)">— ${ctx.what || L("this", "ของชิ้นนี้")}</span></div>
@@ -148,9 +159,10 @@ render(ctx) {
       </div>
       <div class="r">
         <div class="ic-box">${I("calendarDays", 22)}</div>
-        <div class="tx">${L(`days of the ${LT(KB.goalSmallItem().name).toLowerCase()} it could have paid`,
-                            `วันของ${LT(KB.goalSmallItem().name)}ที่เงินก้อนนี้จ่ายได้`)}</div>
-        <div class="vl">${Math.floor(amt / KB.goalSmallPerDay())}</div>
+        <div class="tx">${L(`days of the ${LT(KB.activeGoal().name).toLowerCase()} it could have paid`,
+                            `วันของ${LT(KB.activeGoal().name)}ที่เงินก้อนนี้จ่ายได้`)}<br>
+          <span class="tiny" style="color:var(--c-ink-3)">${L("the goal you're filling right now", "ชั้นที่กำลังเติมอยู่ตอนนี้")}</span></div>
+        <div class="vl">${Math.floor(amt / KB.activeGoal().perDay)}</div>
       </div>
     </div>
 
@@ -159,19 +171,21 @@ render(ctx) {
       <h4>${I("repeat", 17)} ${L("This one keeps charging", "อันนี้เก็บเงินทุกเดือน")}</h4>
       <p>${L(`${KB.baht(rec)} a month is ${KB.baht(rec / 30)} a day added to what you cost — permanently, until you stop it.`,
               `เดือนละ ${KB.baht(rec)} = เพิ่มค่าใช้จ่ายวันละ ${KB.baht(rec / 30)} และจะค้างอยู่แบบนั้นจนกว่าจะเลิก`)}</p>
-      <div class="holes">
+      <div class="s2jars">
         <div class="h">
-          <div class="pit"><i style="height:${covNow}%"></i></div>
+          <div class="rim"></div>
+          <div class="jar" style="height:${jarNow}px"><i style="height:${covNow}%"></i></div>
           <div class="lb">${L("now", "ตอนนี้")}</div><div class="vv">${covNow}%</div>
         </div>
         <div class="arrow">${I("arrowDown", 22)}</div>
         <div class="h">
-          <div class="pit"><i style="height:${covAfter}%"></i></div>
+          <div class="rim"></div>
+          <div class="jar" style="height:${jarAfter}px"><i style="height:${covAfter}%"></i></div>
           <div class="lb">${L("after", "หลังซื้อ")}</div><div class="vv">${covAfter}%</div>
         </div>
       </div>
-      <div class="note">${L(`Your daily cost goes ${KB.baht(before)} → ${KB.baht(after)}. The hole gets deeper and stays deeper.`,
-                            `ต้นทุนต่อวันจาก ${KB.baht(before)} → ${KB.baht(after)} หลุมลึกลงและค้างอยู่อย่างนั้น`)}</div>
+      <div class="note">${L(`Your daily cost goes ${KB.baht(before)} → ${KB.baht(after)}. The jar gets bigger and stays bigger.`,
+                            `ต้นทุนต่อวันจาก ${KB.baht(before)} → ${KB.baht(after)} โหลใหญ่ขึ้นและค้างอยู่อย่างนั้น`)}</div>
     </div>` : ""}
 
     <div class="twin">

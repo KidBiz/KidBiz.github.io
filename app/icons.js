@@ -24,12 +24,14 @@ const ICONS = {
   bars:   '<path d="M4 20.2h16"/><path d="M6.4 17.4v-5.6M12 17.4V6.8M17.6 17.4v-8"/>',
   scale:  '<path d="M12 4.2v16"/><path d="M6.5 6.8h11"/><path d="M3.2 13.3 6.5 6.8l3.3 6.5a3.3 3.3 0 0 1-6.6 0Z"/><path d="M14.2 13.3 17.5 6.8l3.3 6.5a3.3 3.3 0 0 1-6.6 0Z"/><path d="M8.7 20.2h6.6"/>',
 
-  /* --- ซองเงิน 4 ซอง --- */
+  /* --- ซองเงิน 5 ซอง --- */
   bag:   '<path d="M5.5 8.5h13l1 11.8H4.5Z"/><path d="M8.7 8.5V6.7a3.3 3.3 0 0 1 6.6 0v1.8"/>',
   /* "เก็บออม" = หย่อนลงกล่อง — อ่านออกที่ 15px ต่างจากรูปหมูออมสินที่กลายเป็นก้อนกลมๆ */
   save:  '<path d="M12 3.6v9.3"/><path d="m8.3 9.3 3.7 3.6 3.7-3.6"/><path d="M4.2 15.3v3.1a2.2 2.2 0 0 0 2.2 2.2h11.2a2.2 2.2 0 0 0 2.2-2.2v-3.1"/>',
   cart:  '<circle cx="9.6" cy="19.5" r="1.5"/><circle cx="17.1" cy="19.5" r="1.5"/><path d="M2.9 3.7h2.6l2.6 11.5h10L20.3 7H6.7"/>',
   heart: '<path d="M12 20.3S3.7 15.1 3.7 9.4a4.6 4.6 0 0 1 8.3-2.7 4.6 4.6 0 0 1 8.3 2.7c0 5.7-8.3 10.9-8.3 10.9Z"/>',
+  /* "สำรองฉุกเฉิน" = โล่ — ไหล่กว้าง ปลายแหลมสั้น ที่ 15px ยังไม่กลายเป็นหยดน้ำ */
+  shield: '<path d="M12 3.1 4.6 6.2v6c0 4.2 3.1 7.4 7.4 8.7 4.3-1.3 7.4-4.5 7.4-8.7v-6Z"/><path d="m8.9 12.1 2.2 2.2 4-4.4"/>',
 
   /* --- การกระทำ --- */
   plus:  '<path d="M12 5.4v13.2M5.4 12h13.2"/>',
@@ -72,8 +74,15 @@ const ICONS = {
 
 /** เหรียญเป้าเล็ก (เงิน) / เป้าใหญ่ (ทอง) — วาดเอง ไม่ใช้ emoji 🥈🥇
     เพราะ emoji เหรียญหน้าตาต่างกันมากในแต่ละ OS และคุมสีไม่ได้ */
+const MEDAL_COLOURS = { bronze: "#C08344", silver: "#9AA0A6", gold: "#D9A82C" };
 function MEDAL(kind, size = 18) {
-  return `<span class="medal" style="color:${kind === "gold" ? "#D9A82C" : "#9AA0A6"}">${I("medal", size)}</span>`;
+  return `<span class="medal" style="color:${MEDAL_COLOURS[kind] || MEDAL_COLOURS.silver}">${I("medal", size)}</span>`;
+}
+/** เหรียญตามลำดับชั้น: ชั้นล่างสุด = ทองแดง ไล่ขึ้นไปจนชั้นบนสุด = ทอง */
+function MEDAL_FOR(idx, total, size = 18) {
+  const order = ["bronze", "silver", "gold"];
+  if (idx >= total - 1) return MEDAL("gold", size);
+  return MEDAL(order[Math.min(idx, order.length - 2)], size);
 }
 
 /** สร้าง <svg> ของไอคอน — สืบสีจากตัวอักษรที่ครอบอยู่ */

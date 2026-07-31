@@ -57,15 +57,17 @@ css: `
 
 render(ctx) {
   const amt = ctx.amt || 0;
-  const d = KB.daysOf(amt);
-  const item = KB.goalSmallItem();
+  const g = KB.activeGoal();                      // ชั้นที่เงินก้อนนี้ไปลง
+  const item = { name: g.name, perMonth: g.cost };
+  const d = { small: Math.floor(amt / g.perDay), big: amt / KB.dailyCost() };
   const cov = KB.coverage(), covP = KB.coveragePending();
   const rate = ctx.hrs ? amt / ctx.hrs : 0;
 
-  /* จำนวนวันของเป้าเล็กที่ cover ได้ ก่อน vs หลังเงินก้อนนี้ */
-  const daysAfter = KB.goalSmallDays() + d.small;   // pending ยังไม่นับใน goalSmallDays
-  const daysBefore = KB.goalSmallDays();
-  const top = Math.max(daysAfter, 1);
+  /* จำนวนวันของชั้นที่กำลังเติม ก่อน vs หลังเงินก้อนนี้ — เพดาน 30 วัน เพราะ loop เป็นเดือน */
+  const daysBefore = g.days;
+  const daysAfter  = Math.min(30, Math.floor((g.filled + amt) / g.perDay));
+  const wasFull    = g.done;
+  const top = 30;
 
   return `
   <div class="cel">
@@ -75,16 +77,19 @@ render(ctx) {
   </div>
 
   <div class="dayline">
-    <div class="top">${MEDAL("silver")}<span class="nm">${LT(item.name)}</span></div>
+    <div class="top">${MEDAL_FOR(g.i, KB.goals().length)}<span class="nm">${LT(item.name)}</span></div>
     <div class="hero">${d.small} <span>${L(d.small === 1 ? "day" : "days", "วัน")}</span></div>
-    <div class="say">${L(`This alone pays your ${LT(item.name).toLowerCase()} for <b>${d.small} days</b>.`,
-                         `เงินก้อนนี้ก้อนเดียว จ่าย${LT(item.name)}ได้ <b>${d.small} วัน</b> เลยนะ`)}</div>
+    <div class="say">${wasFull
+      ? L(`Worth <b>${d.small} days</b> of it — though this month's ${LT(item.name).toLowerCase()} is already fully covered, so this goes up into the big goal.`,
+          `คิดเป็น <b>${d.small} วัน</b> — แต่${LT(item.name)}ของเดือนนี้เต็มแล้ว เงินก้อนนี้เลยขึ้นไปชั้นเป้าใหญ่`)
+      : L(`This alone pays your ${LT(item.name).toLowerCase()} for <b>${d.small} days</b>.`,
+          `เงินก้อนนี้ก้อนเดียว จ่าย${LT(item.name)}ได้ <b>${d.small} วัน</b> เลยนะ`)}</div>
 
     <div class="daybars">
       <div class="col"><div class="val">${daysBefore}</div>
         <div class="bx" style="height:${Math.max(6, daysBefore / top * 100)}%"></div>
         <div class="cap">${L("before", "ก่อนหน้านี้")}</div></div>
-      <div class="col now"><div class="val">${daysAfter}</div>
+      <div class="col now"><div class="val">${daysAfter}<span style="color:var(--c-ink-3)">/30</span></div>
         <div class="bx" style="height:${Math.max(6, daysAfter / top * 100)}%"></div>
         <div class="cap">${L("now", "ตอนนี้")}</div></div>
     </div>
@@ -108,7 +113,7 @@ render(ctx) {
 
   <div class="card">
     <div class="card-t">${I("split", 18)} ${L("Split by your own rule", "แบ่งตามกฎของหนู")}
-      <span class="r">${KB.s.rule.need}/${KB.s.rule.save}/${KB.s.rule.spend}/${KB.s.rule.share}</span></div>
+      <span class="r">${KB.s.envelopes.map(e => KB.s.rule[e.key]).join("/")}</span></div>
     ${KB.splitOf(amt).map(x => `
       <div class="splitrow">
         <span class="dot" style="background:var(--c-${x.key})"></span>

@@ -3,10 +3,13 @@
    N5 ซองหมด = บทเรียน ไม่ใช่ error (ห้ามตำหนิ ห้ามสีแดง)
    ============================================================ */
 
+/* กฎแบ่งเงินในรูป "40/18/12/20/10" — ไล่ตามลำดับซองใน data.js ไม่ผูกกับจำนวนซอง */
+const RULE_STR = r => KB.s.envelopes.map(e => (r || KB.s.rule)[e.key]).join("/");
+
 SCREENS.s4 = {
 title: () => L("Envelopes", "ซองเงิน"),
-sub: () => L(`Your rule: ${KB.s.rule.need}/${KB.s.rule.save}/${KB.s.rule.spend}/${KB.s.rule.share}`,
-             `กฎของฉัน ${KB.s.rule.need}/${KB.s.rule.save}/${KB.s.rule.spend}/${KB.s.rule.share}`),
+/* อ่านลำดับซองจาก envelopes เสมอ — เพิ่ม/ลดซองแล้วทุกอย่างในหน้านี้ตามเอง */
+sub: () => L(`Your rule: ${RULE_STR()}`, `กฎของฉัน ${RULE_STR()}`),
 notes: () => [
   ["N5", L("The Spend envelope is empty — and there is no alert, no red, no telling-off. Just the numbers and a question worth answering.",
            "ซองใช้หมดแล้ว และไม่มีป๊อปอัพเตือน ไม่มีสีแดง ไม่มีคำตำหนิ มีแค่ตัวเลขกับคำถามที่ควรตอบ")],
@@ -17,7 +20,10 @@ notes: () => [
 ],
 
 css: `
-.envs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 13px; }
+/* minmax(0,1fr) ไม่ใช่ 1fr — ชื่อซองยาว ("สำรองฉุกเฉิน") จะดันคอลัมน์ตัวเองให้กว้างกว่าอีกฝั่ง */
+.envs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 13px; }
+/* ซองจำนวนคี่: ใบสุดท้ายกินเต็มแถว ไม่ทิ้งช่องว่างข้างเดียว */
+.envs .env:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .env { background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-md); padding: 14px; box-shadow: var(--shadow); }
 .env .hd { display: flex; align-items: center; gap: 7px; font-size: var(--fs-sm); font-weight: 700; margin-bottom: 11px; }
 .env .hd .p { margin-left: auto; font-size: var(--fs-xs); color: var(--c-ink-3); font-weight: 600; }
@@ -63,7 +69,7 @@ css: `
 render(ctx) {
   const empties = KB.emptyEnvs();
   const r = ctx.draft || KB.s.rule;
-  const sum = r.need + r.save + r.spend + r.share;
+  const sum = KB.s.envelopes.reduce((a, e) => a + r[e.key], 0);
 
   return `
   <div class="envs">
@@ -152,12 +158,12 @@ mount(el, ctx) {
   });
   on("#apply", () => {
     const d = ctx.draft, why = el.querySelector("#why").value.trim();
-    if (d.need + d.save + d.spend + d.share !== 100) return toast(L("It has to add up to 100%", "รวมกันต้องได้ 100%"));
+    if (KB.s.envelopes.reduce((a, e) => a + d[e.key], 0) !== 100) return toast(L("It has to add up to 100%", "รวมกันต้องได้ 100%"));
     if (!why) return toast(L("Write a short reason first — you'll want to read it back later",
                              "เขียนเหตุผลสั้นๆ ก่อนนะ จะได้ย้อนดูได้ว่าตอนนั้นคิดอะไร"));
     KB.s.rule = d;
     KB.s.ruleHistory.push({ v: KB.s.ruleHistory.length + 1, d: { en: "Today", th: "วันนี้" },
-                            r: `${d.need}/${d.save}/${d.spend}/${d.share}`, why: { en: why, th: why } });
+                            r: RULE_STR(d), why: { en: why, th: why } });
     KB.save(); setCtx({ draft: null });
     toast(L("New rule is live · your next money will split this way", "ใช้กฎใหม่แล้ว · เงินก้อนถัดไปจะแบ่งตามนี้"));
   });
