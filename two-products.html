@@ -1,4 +1,4 @@
-<title>KidBiz — 2 สินค้า (Finance นำ + Camp พรีเมียม)</title>
+<title>KidBiz Money — ต้นทุนและกำไร</title>
 <style>
   :root{ --bg:#FFFFFF; --surface:#FAF8F3; --ink:#182720; --muted:#54655B;
     --green:#0E7A5F; --green-deep:#0A5C48; --gold:#F5B82E; --gold-soft:#FDF3D9;
@@ -14,176 +14,143 @@
     font-family:"Noto Sans Thai","Leelawadee UI","Sukhumvit Set",-apple-system,"Segoe UI",sans-serif;
     line-height:1.5; -webkit-font-smoothing:antialiased; padding:30px 26px 40px; font-size:1.12rem; }
   .sheet{max-width:980px; margin:0 auto}
-  header{border-bottom:4px solid var(--green); padding-bottom:14px; margin-bottom:8px}
+  header{border-bottom:4px solid var(--green); padding-bottom:14px; margin-bottom:18px}
   h1{font-size:2rem; font-weight:800}
   header .sub{font-size:1.02rem; color:var(--muted); margin-top:6px}
+  h2{font-size:1.3rem; font-weight:800; margin:28px 0 12px; display:flex; align-items:center; gap:11px; color:var(--green-deep)}
+  h2 .n{width:32px; height:32px; flex:none; border-radius:8px; background:var(--green); color:#fff; display:grid; place-items:center; font-size:1.05rem}
 
-  .band{margin-top:26px; border-radius:14px; padding:4px 20px 20px; border:1px solid var(--line)}
-  .band.hero{border:2px solid var(--green); background:var(--gold-soft)}
-  .tag{display:inline-block; font-size:.95rem; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; color:#fff}
-  .tag.g{background:var(--green)} .tag.b{background:var(--blue)}
-  h2{font-size:1.5rem; font-weight:800; margin:12px 0 4px}
-  h2 small{font-size:1rem; color:var(--muted); font-weight:600}
-  h3{font-size:1.15rem; font-weight:800; margin:18px 0 8px; color:var(--green-deep)}
+  .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:12px 0}
+  .card{background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--green); border-radius:11px; padding:15px 16px}
+  .card b{display:block; font-size:1.85rem; font-weight:800; color:var(--green); line-height:1.05; font-variant-numeric:tabular-nums}
+  .card span{font-size:.94rem; color:var(--muted); display:block; margin-top:6px; line-height:1.35}
 
-  table{width:100%; border-collapse:collapse; font-size:1.1rem; margin-top:4px}
-  th,td{padding:9px 12px; border-bottom:1px solid var(--line); text-align:left}
+  table{width:100%; border-collapse:collapse; font-size:1.1rem; margin-top:6px}
+  th,td{padding:10px 13px; border-bottom:1px solid var(--line); text-align:left}
   th.r,td.r{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
-  th{font-size:.92rem; color:var(--muted); font-weight:700}
-  tr.tot td{font-weight:800; background:rgba(14,122,95,.08); border-top:2px solid var(--ink); border-bottom:none; font-size:1.15rem}
+  th{font-size:.95rem; color:var(--muted); font-weight:700; border-bottom:2px solid var(--line)}
+  tr.tot td{font-weight:800; background:var(--gold-soft); border-top:2px solid var(--ink); border-bottom:none; font-size:1.15rem}
+  tr.sub td{color:var(--muted); font-size:1rem}
   .hi{color:var(--green); font-weight:800}
-  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:12px 0}
-  .card{background:var(--bg); border:1px solid var(--line); border-left:5px solid var(--green); border-radius:11px; padding:14px 16px}
-  .card b{display:block; font-size:1.7rem; font-weight:800; color:var(--green); line-height:1.05}
-  .card span{font-size:.92rem; color:var(--muted); display:block; margin-top:5px; line-height:1.35}
-  .note{background:var(--bg); border-left:5px solid var(--gold); border-radius:0 10px 10px 0; padding:13px 16px; font-size:1.05rem; margin-top:12px; line-height:1.55}
-  .note.g{border-left-color:var(--green)}
-  /* two-column boxes */
+  .be{background:rgba(245,184,46,.14)}
+
   .two{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px}
-  .box{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
-  .box.green{border-left:6px solid var(--green)}
-  .box.blue{border-left:6px solid var(--blue)}
-  .box h3{font-size:1.12rem; font-weight:800; color:var(--ink)}
-  .box p{font-size:1.05rem; color:var(--muted); line-height:1.5}
-  .box ul{margin:0; padding-left:20px}
-  .box li{font-size:1.05rem; color:var(--muted); line-height:1.5; margin-bottom:5px}
-  .flow{font-size:1.05rem; background:var(--surface); border:1px solid var(--line);
-        border-radius:9px; padding:12px 15px; margin-top:10px; line-height:1.7}
-  /* share bar */
-  .share{display:flex; gap:12px; margin-top:8px}
-  .share div{flex:1; text-align:center; border-radius:12px; padding:18px 8px; color:#fff}
-  .share .f{background:var(--green); flex:6}
-  .share .i{background:var(--blue); flex:3}
-  .share .p{background:var(--gold); color:#5a4300; flex:1.5}
-  .share b{display:block; font-size:2.6rem; font-weight:800; line-height:1}
-  .share span{font-size:1rem; display:block; margin-top:5px}
+  .box{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+  .box.green{border-left:6px solid var(--green)} .box.blue{border-left:6px solid var(--blue)}
+  .box h3{font-size:1.12rem; font-weight:800; margin-bottom:7px}
+  .box p,.box li{font-size:1.05rem; color:var(--muted); line-height:1.5}
+  .box ul{margin:0; padding-left:20px} .box li{margin-bottom:5px}
+  .note{background:var(--surface); border-left:5px solid var(--gold); border-radius:0 10px 10px 0; padding:14px 17px; font-size:1.06rem; margin-top:13px; line-height:1.55}
+  .note.g{border-left-color:var(--green)}
   strong{color:var(--ink)}
   footer{margin-top:26px; padding-top:14px; border-top:1px solid var(--line); font-size:.95rem; color:var(--muted); line-height:1.5}
-  @media print{ body{padding:0} .band{page-break-inside:avoid} }
-  @media (max-width:760px){ .cards{grid-template-columns:1fr} .two{grid-template-columns:1fr} .share{flex-direction:column} }
+  @media print{ body{padding:0} h2{page-break-after:avoid} table,.cards,.two{page-break-inside:avoid} }
+  @media (max-width:800px){ .cards{grid-template-columns:1fr 1fr} .two{grid-template-columns:1fr} }
 </style>
 
 <div class="sheet">
 <header>
-  <h1>KidBiz — 2 สินค้า</h1>
-  <div class="sub">นำด้วย <strong>Money Program</strong> (สเกลได้) → สร้างฐานครอบครัว → ป้อนต่อ <strong>Discovery Camp</strong> (พรีเมียม) · เสนอ <strong>พี่ตุ๊ก</strong> โดย <strong>แบงค์</strong> · ก.ค. 2569</div>
+  <h1>KidBiz Money — ต้นทุนและกำไร</h1>
+  <div class="sub">โปรแกรมสร้างนิสัยการเงิน (ครอบครัว: พ่อ/แม่ + ลูก 13–18 ปี) · <strong>5 วัน · 2 class/เดือน = 24 class/ปี</strong> · สอนแบบสัมมนา + เปิดแอปทำตามพร้อมกัน · ก.ค. 2569</div>
 </header>
 
-<!-- ================= FINANCE (HERO) ================= -->
-<div class="band hero">
-  <span class="tag g">① ตัวนำ · สเกลได้</span>
-  <h2>KidBiz Money — โปรแกรมสร้างนิสัยการเงิน <small>(ครอบครัว: พ่อ/แม่ + ลูก 13–18 ปี)</small></h2>
-
-  <div class="note g">
-    <strong>ทำไมนำด้วยตัวนี้:</strong> แอปสร้างแล้ว · ตลาดพิสูจน์แล้วว่ามีคนจ่าย · <strong>สอนแบบสัมมนา 100+ คนพร้อมกัน (นั่งฟัง + กดแอปตาม) = สเกลได้ ไม่ต้องพึ่งพี่เลี้ยงเยอะ ห้องขยายได้</strong> · ต่างจากคู่แข่ง (ฟรี/สอนความรู้) เพราะเรา <strong>เปลี่ยนนิสัย + วัดผลด้วยแอป + พ่อแม่ร่วม</strong>
-  </div>
-
-  <h3>รูปแบบ &amp; ราคา</h3>
-  <table><tbody>
-    <tr><td>รูปแบบ</td><td class="r"><strong>4 ครึ่งวัน (3–4 ชม.) ใน 1 เดือน · เสาร์เช้า</strong></td></tr>
-    <tr><td>รอบต่อเดือน</td><td class="r">เสาร์ + อาทิตย์ = <strong>2 class/เดือน (24/ปี)</strong></td></tr>
-    <tr><td>ราคา/ครอบครัว (พ่อ/แม่ 1 + ลูก 1)</td><td class="r">Early Bird <strong>12,999</strong> / ปกติ <strong>14,999</strong></td></tr>
-    <tr><td>คนเพิ่ม (พ่อแม่คู่ / พี่น้อง)</td><td class="r"><strong>+4,500/คน</strong> — กำไรเกือบล้วน</td></tr>
-  </tbody></table>
-
-  <h3>ตัวเลข — สเกลตามขนาดห้อง (ราคาปกติ 14,999)</h3>
-  <table>
-    <thead><tr><th>ขนาดห้อง</th><th class="r">50 ครอบครัว</th><th class="r">80 ครอบครัว</th><th class="r">100 ครอบครัว</th></tr></thead>
-    <tbody>
-      <tr><td>รายได้/class</td><td class="r">750,000</td><td class="r">1,200,000</td><td class="r">1,500,000</td></tr>
-      <tr><td>ต้นทุนรวม/class</td><td class="r">−433,000</td><td class="r">−538,000</td><td class="r">−604,000</td></tr>
-      <tr class="tot"><td>กำไร/class</td><td class="r hi">+316,000</td><td class="r hi">+662,000</td><td class="r hi">+896,000</td></tr>
-      <tr><td>กำไรทั้งปี (24 class)</td><td class="r hi">~7.6 ล้าน</td><td class="r hi">~15.9 ล้าน</td><td class="r hi">~21.5 ล้าน</td></tr>
-    </tbody>
-  </table>
-  <div class="cards">
-    <div class="card"><b>28 ครอบครัว</b><span>จุดคุ้มทุน/class<br>(ที่ราคา 14,999)</span></div>
-    <div class="card"><b>+4,150</b><span>กำไรต่อ "คนเพิ่ม" 1 คน<br>(เกือบล้วน)</span></div>
-    <div class="card"><b>~3.5 ล้าน</b><span>กำไรปีแรก (ประมาณการ<br>ทยอยเต็ม เฉลี่ย 40 ครอบครัว)</span></div>
-  </div>
-
-  <div class="note">
-    ⚠️ <strong>ความเสี่ยงเดียว = ดีมานด์</strong> (ต้นทุนต่ำแล้ว) — ต้องเติมห้องให้ได้ 28+ ครอบครัว/class · <strong>คอนเนกชันของพี่ตุ๊ก (เข้าถึงแขกรับเชิญคนดังเป็นตัวดึง) ช่วยตรงจุดนี้</strong>
-  </div>
+<div class="cards">
+  <div class="card"><b>55–71%</b><span>กำไรขั้นต้น/class<br>(ก่อนหักค่าบริษัท)</span></div>
+  <div class="card"><b>22</b><span>ครอบครัว = จุดคุ้มทุน<br>(จากห้อง 50)</span></div>
+  <div class="card"><b>780 ฿</b><span>ต้นทุนผันแปร<br>ต่อ 1 ครอบครัว</span></div>
+  <div class="card"><b>551K–1.43M</b><span>กำไรขั้นต้น/class<br>(ก่อนหักค่าบริษัท)</span></div>
 </div>
 
-<!-- ================= CAMP (PREMIUM) ================= -->
-<div class="band">
-  <span class="tag b">② พรีเมียม · รับช่วงต่อ</span>
-  <h2>KidBiz Discovery Camp — ค่ายค้นหาตัวตนผ่านธุรกิจ <small>(9–15 ปี)</small></h2>
-
-  <div class="note">
-    <strong>บทบาท:</strong> สินค้าพรีเมียม อัตราดูแล 1:2.3 อ่านตัวตนเด็กรายคน (First Compass) · <strong>ไม่เร่งสเกล — เก็บเป็นตัวชูภาพลักษณ์ + มาร์จินสูง</strong><br>
-    🔗 <strong>พลังของการมี 2 สินค้า:</strong> ครอบครัวที่มาเรียน Money Program = ฐานลูกค้าที่พร้อมส่งลูกเข้าค่ายพรีเมียมทันที (ได้นักเรียนโดยไม่ต้องหาใหม่)
-  </div>
-
-  <table>
-    <thead><tr><th>รายการ</th><th class="r">ตัวเลข</th></tr></thead>
-    <tbody>
-      <tr><td>ราคา/คน</td><td class="r"><strong>25,000</strong> (พรีเมียม)</td></tr>
-      <tr><td>ความจุ</td><td class="r">30 คน/รอบ · ทีม 13 คน (1:2.3)</td></tr>
-      <tr><td>จุดคุ้มทุน</td><td class="r">21 คน จาก 30</td></tr>
-      <tr class="tot"><td>กำไร/ปี (16→24 รอบ)</td><td class="r hi">~3.1 → 6.1 ล้าน</td></tr>
-    </tbody>
-  </table>
-  <div class="note">รายละเอียดเต็ม (ต้นทุนต่อรอบ · sensitivity) อยู่ในเอกสาร “ตัวเลขการเงิน — Camp” แยกต่างหาก</div>
+<div class="note g">
+  💡 <strong>หัวใจของโมเดล:</strong> สอนสัมมนาห้องใหญ่ + ทุกคนเปิดแอปทำตามพร้อมกัน → <strong>วิทยากร 1 คนสอน 50 หรือ 100 ครอบครัว ต้นทุนเกือบเท่ากัน</strong> · เพิ่มคน = กำไรเพิ่มเกือบเต็ม · ต่างจากคู่แข่ง (ฟรี/สอนความรู้) เพราะเรา <strong>เปลี่ยนนิสัย + วัดผลด้วยแอป + พ่อแม่เรียนร่วม</strong>
 </div>
 
-<!-- ================= DEAL / MONEY ================= -->
-<div class="band">
-  <span class="tag g">③ เงินลงทุน &amp; ข้อตกลง</span>
-  <h2>โครงสร้างข้อตกลงร่วมลงทุน</h2>
+<!-- 1 -->
+<h2><span class="n">1</span> รูปแบบ &amp; ราคา</h2>
+<table><tbody>
+  <tr><td>รูปแบบ</td><td class="r"><strong>5 วัน</strong> · สัมมนา + เปิดแอปทำตามพร้อมกัน</td></tr>
+  <tr><td>รอบต่อเดือน</td><td class="r">เสาร์ + อาทิตย์ = <strong>2 class/เดือน (24/ปี)</strong></td></tr>
+  <tr><td>ราคา/ครอบครัว (พ่อ/แม่ 1 + ลูก 1)</td><td class="r">Early Bird <strong>17,999</strong> / ปกติ <strong>20,000</strong></td></tr>
+  <tr><td>คนเพิ่ม (พ่อแม่คู่ / พี่น้อง)</td><td class="r"><strong>+4,500/คน</strong> — กำไรเกือบล้วน</td></tr>
+</tbody></table>
 
-  <div class="note g" style="font-size:1.15rem">
-    💚 <strong>ธุรกิจเลี้ยงตัวเองได้ทันที ไม่ต้องเติมเงินอีก</strong> — เงินก้อนแรกพาไปถึง class แรก พอขายได้ ลูกค้าจ่ายล่วงหน้า ธุรกิจก็หมุนเอง · <strong>พี่ตุ๊กลงครั้งเดียวจบ</strong>
-  </div>
+<!-- 2 -->
+<h2><span class="n">2</span> กำไรตามขนาดห้อง (ราคาปกติ 20,000/ครอบครัว)</h2>
+<table>
+  <thead><tr><th>&nbsp;</th><th class="r">22 (คุ้มทุน)</th><th class="r">50 ครอบครัว</th><th class="r">80 ครอบครัว</th><th class="r">100 ครอบครัว</th></tr></thead>
+  <tbody>
+    <tr><td>รายได้</td><td class="r">440,000</td><td class="r">1,000,000</td><td class="r">1,600,000</td><td class="r">2,000,000</td></tr>
+    <tr><td>ต้นทุน class (ก่อนค่าบริษัท)</td><td class="r">−427,000</td><td class="r">−449,000</td><td class="r">−520,000</td><td class="r">−570,000</td></tr>
+    <tr class="tot"><td>กำไรขั้นต้น / class</td><td class="r be">~13,000</td><td class="r hi">551,000</td><td class="r hi">1,080,000</td><td class="r hi">1,430,000</td></tr>
+    <tr class="sub"><td>อัตรากำไรขั้นต้น</td><td class="r">3%</td><td class="r">55%</td><td class="r">68%</td><td class="r">71%</td></tr>
+  </tbody>
+</table>
+<div class="note">
+  🟢 <strong>คุ้มทุนที่ 22 ครอบครัว</strong> — ทุกครอบครัวที่เกิน 22 คือ <strong>กำไรเกือบเต็ม</strong> (เพราะต้นทุนหลักจ่ายไปแล้ว) · “กำไรขั้นต้น” ยังไม่หักค่าบริษัท (เงินเดือนทีม+ระบบ) ซึ่งคิดในภาพรวมบริษัทแยกต่างหาก
+</div>
 
-  <h3>ใครลงอะไร</h3>
-  <div class="two">
-    <div class="box blue"><h3 style="margin:0 0 6px">👨‍💼 พี่ตุ๊กลง</h3><ul><li>เงินลงทุน ~1,000,000 บาท</li><li>คอนเนกชัน (เข้าถึงแขกรับเชิญคนดังเป็นตัวดึง)</li></ul></div>
-    <div class="box green"><h3 style="margin:0 0 6px">🧑‍💻 แบงค์ลง</h3><ul><li>หลักสูตร + แอปการเงิน — สร้างเองในเวลาสั้น (ถ้าจ้างทำ ~400,000–800,000)</li><li>ความรู้การตลาด + เว็บที่ดูน่าเชื่อถือ</li><li>ลงมือทำเต็มเวลา + รับผิดชอบผลลัพธ์</li></ul></div>
-  </div>
-
-  <h3>โครงสร้างหุ้น</h3>
-  <div class="share">
-    <div class="f"><b>60%</b><span>แบงค์ (ผู้ก่อตั้ง)</span></div>
-    <div class="i"><b>30%</b><span>พี่ตุ๊ก</span></div>
-    <div class="p"><b>10%</b><span>กันไว้ให้ทีม<br>(คนปั้นครูสอน)</span></div>
-  </div>
-  <div class="note">กัน <strong>10% ไว้ตั้งแต่ตอนนี้</strong> สำหรับหุ้นส่วนที่จะมาช่วยปั้นทีมสอน — เพื่อให้ตอนเติมคนที่ 3 <strong>แบงค์ยังอยู่ที่ 60% ควบคุมได้ชัดเจน</strong></div>
-
-  <h3>เงินก้อนแรก ~1,010,000 (พี่ตุ๊กลงทั้งก้อน)</h3>
+<!-- 3 -->
+<h2><span class="n">3</span> ต้นทุนต่อ 1 class (ห้อง 50 ครอบครัว)</h2>
+<div class="two">
   <table>
-    <thead><tr><th>เงินก้อนแรกใช้ทำอะไร</th><th class="r">บาท</th></tr></thead>
+    <thead><tr><th>ต้นทุนคงที่ (5 วัน)</th><th class="r">บาท</th></tr></thead>
     <tbody>
-      <tr><td>เงินเดือนผู้ก่อตั้ง แบงค์ (3 เดือนก่อนมีรายได้)</td><td class="r">500,000</td></tr>
-      <tr><td>ปรับแอปให้พร้อมใช้จริง (production)</td><td class="r">130,000</td></tr>
-      <tr><td>การตลาดเปิดตัว (เติม class แรก ๆ)</td><td class="r">150,000</td></tr>
-      <tr><td>จดบริษัท + กฎหมาย + แบรนด์</td><td class="r">80,000</td></tr>
-      <tr><td>มัดจำสถานที่ + เงินสำรอง</td><td class="r">150,000</td></tr>
-      <tr class="tot"><td>รวม</td><td class="r">~1,010,000</td></tr>
+      <tr><td>วิทยากรนำ + ผู้ช่วย</td><td class="r">137,500</td></tr>
+      <tr><td>ห้องประชุมใหญ่ + จอ + เครื่องเสียง</td><td class="r">112,500</td></tr>
+      <tr><td>ทีมหน้างาน (ลงทะเบียน/ช่วยเปิดแอป)</td><td class="r">30,000</td></tr>
+      <tr><td>ทีมงานถ่ายทำวิดีโอ</td><td class="r">50,000</td></tr>
+      <tr><td>การตลาด/โฆษณา</td><td class="r">80,000</td></tr>
+      <tr class="tot"><td>รวมต้นทุน class</td><td class="r">410,000</td></tr>
     </tbody>
   </table>
-
-  <h3>ผลตอบแทนพี่ตุ๊ก — ตอบโจทย์ “รายได้มั่นคงตอนเกษียณ”</h3>
-  <div class="two">
-    <div class="box green"><h3 style="margin:0 0 6px">① คืนเงินต้นก่อน</h3><p>กำไรช่วงแรกเอาคืนเงินต้น ~1,000,000 ให้พี่ตุ๊กจนครบก่อนแบ่งกำไร</p><div class="flow"><strong>เงินต้นคืนภายในปีแรก</strong> 💰</div></div>
-    <div class="box blue"><h3 style="margin:0 0 6px">② ปันผลทุกปี</h3><p>หลังคืนต้นครบ แบ่งกำไรตามหุ้นทุกปี · พี่ตุ๊ก 30% = รายได้ต่อเนื่องตอนเกษียณ</p><div class="flow">เช่น กำไรแบ่ง 3,000,000/ปี → พี่ตุ๊กรับ <strong>~900,000/ปี</strong></div></div>
-  </div>
-
-  <h3>บทบาท &amp; การตัดสินใจ</h3>
   <table>
-    <thead><tr><th>แบงค์ (60%) ตัดสินใจเองได้</th><th>ตัดสินใจร่วมกัน</th></tr></thead>
-    <tbody><tr>
-      <td>หลักสูตร · ทีม · ราคา · สถานที่ · การตลาด · งานประจำวัน (เพื่อความเร็ว)</td>
-      <td>กู้เงินเพิ่ม · รับหุ้นส่วนใหม่ · ขายกิจการ · นโยบายปันผล</td>
-    </tr></tbody>
+    <thead><tr><th>ต้นทุนผันแปร (ต่อครอบครัว)</th><th class="r">บาท</th></tr></thead>
+    <tbody>
+      <tr><td>เอกสาร / สมุดบันทึก / ใบประกาศ</td><td class="r">250</td></tr>
+      <tr><td>ของว่าง 5 วัน (2 คน)</td><td class="r">400</td></tr>
+      <tr><td>ระบบ/แอป ต่อผู้ใช้</td><td class="r">80</td></tr>
+      <tr><td>ของที่ระลึก (โล่/เหรียญตามเป้า)</td><td class="r">50</td></tr>
+      <tr class="tot"><td>รวมต่อครอบครัว</td><td class="r">780</td></tr>
+      <tr class="sub"><td>คนเพิ่ม +4,500 → ต้นทุนเพิ่มแค่ ~400</td><td class="r hi">กำไร ~4,100</td></tr>
+    </tbody>
   </table>
+</div>
+<div class="note">ต้นทุน class เกือบทั้งหมด<strong>ไม่โตตามจำนวนคน</strong> (วิทยากร/วิดีโอ/การตลาดเท่าเดิม) → ยิ่งห้องใหญ่ ยิ่งกำไรต่อครอบครัวสูง</div>
 
-  <div class="note">⚠️ ร่างเพื่อพูดคุย ยังไม่ผูกมัด — เมื่อตกลงหลักการแล้วให้ทนายทำสัญญาผู้ถือหุ้นอย่างเป็นทางการ</div>
+<!-- 4 -->
+<h2><span class="n">4</span> จุดคุ้มทุน — ต้องขายกี่ครอบครัว</h2>
+<table>
+  <thead><tr><th>ราคา</th><th class="r">ห้อง 50</th><th class="r">ห้อง 80</th><th class="r">ห้อง 100</th></tr></thead>
+  <tbody>
+    <tr><td>Early Bird 17,999</td><td class="r">24</td><td class="r">27</td><td class="r">29</td></tr>
+    <tr class="tot"><td>ปกติ 20,000</td><td class="r">22 <span style="font-weight:600;font-size:.95rem">(44%)</span></td><td class="r">24</td><td class="r">26</td></tr>
+  </tbody>
+</table>
+<div class="note g">🟢 <strong>ลูกค้าจ่ายล่วงหน้าก่อนเริ่มเรียน</strong> → รู้ยอดจองก่อนจ่ายค่าห้อง/วิทยากร · <strong>เลื่อนรอบได้ถ้ายอดไม่ถึงเป้า จึงแทบไม่มีทางขาดทุนหนัก</strong></div>
+
+<!-- 5 -->
+<h2><span class="n">5</span> ความเสี่ยง &amp; สิ่งที่ต้องยืนยัน</h2>
+<div class="two">
+  <div class="box blue">
+    <h3>⚠️ ความเสี่ยง</h3>
+    <ul>
+      <li><strong>ดีมานด์คือตัวแปรเดียว</strong> — ต้องได้ 22+ ครอบครัว/class (~600 ครอบครัว/ปี) · ต้นทุนต่ำแล้ว ความเสี่ยงย้ายมาอยู่ที่การเติมห้อง</li>
+      <li><strong>คนหลุดกลางคอร์ส</strong> (5 วันหลายสัปดาห์) → เก็บเงินเต็มล่วงหน้า + แอปเตือน + พ่อแม่เป็นตัวยึด</li>
+      <li><strong>คู่แข่งฟรี</strong> → ไม่ขาย “ความรู้” แต่ขาย “เปลี่ยนนิสัย + วัดผล + พ่อแม่ร่วม”</li>
+    </ul>
+  </div>
+  <div class="box green">
+    <h3>📋 ต้องยืนยันก่อนล็อกราคา</h3>
+    <ul>
+      <li>ใบเสนอราคาห้องประชุม 100–200 คน × 5 วัน (+จอ/เครื่องเสียง)</li>
+      <li>ค่าตัววิทยากรนำจริง (ตั้งไว้ ~27,500/วัน)</li>
+      <li><strong>ต้นทุนหาลูกค้าจริง</strong> — สำคัญสุด เพราะดีมานด์คือความเสี่ยงหลัก</li>
+      <li>ค่าปรับแอปเป็น production + hosting รายเดือน</li>
+    </ul>
+  </div>
 </div>
 
 <footer>
-  ตัวเลขทั้งหมดเป็นประมาณการ (เต็มความจุ) · ปีแรกเป็นช่วงทยอยเติม — ดีมานด์คือตัวแปรหลัก · สมมติฐาน: เงินเดือนแบงค์ 150,000 + Operations 35,000/เดือน · speaker = จ้างเทรนเนอร์นำ + แขกรับเชิญคนดังเป็นตัวดึงบางรอบ (ผ่านคอนเนกชันพี่ตุ๊ก) · ยังไม่ผ่านการสอบบัญชี · KidBiz (ชื่อชั่วคราว)
+  ตัวเลขเป็นประมาณการ ยังไม่ผ่านการสอบบัญชี · <strong>เอกสารนี้แสดง “กำไรขั้นต้นต่อ class” ยังไม่หักค่าบริษัท (เงินเดือนทีม + ระบบ) ซึ่งคิดในภาพรวมบริษัทแยกต่างหาก</strong> · แอปสร้างเสร็จแล้ว (ไม่มีต้นทุนพัฒนาก้อนใหญ่) · แขกรับเชิญคนดังยังไม่รวมในงบ (งบการตลาดเสริมเฉพาะ class เปิดตัว) · KidBiz (ชื่อชั่วคราว)
 </footer>
 </div>
