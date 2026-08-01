@@ -132,8 +132,7 @@ const SEED = {
      streak นับเป็น "สัปดาห์" ของพฤติกรรมการเงิน (แบ่งเงินตามกฎ)
      ไม่ใช่ streak ของการ log เพราะ log ย้อนหลังทำให้ streak การ log ไม่มีความหมาย */
   spend: { need: 232, want: 154 },      // 60 : 40
-  streak: { weeks: 3, best: 3, kind: { en: "split by my own rule", th: "แบ่งเงินตามกฎตัวเอง" } },
-  reflectionsDone: 3, reflectionsDue: 3,
+  streak: { weeks: 3, best: 3, kind: { en: "split by my own rule", th: "แบ่งเงินตามกฎ" } },
 
   triggers: [
     { when: "15:00–17:00", n: 6, where: { en: "Outside school",       th: "หน้าโรงเรียน" } },
@@ -142,19 +141,22 @@ const SEED = {
     { when: { en: "Weekend afternoons", th: "บ่ายวันหยุด" }, n: 3, where: { en: "The mall", th: "ห้าง" } }
   ],
 
-  /* --- ฝั่งพ่อแม่ --- */
+  /* --- ฝั่งพ่อแม่ (§2.3) — 3 สัญญาณที่พ่อแม่ทำได้จริง
+     ❌ ตัด "ไม่ bailout" ออกทั้งหมด: ของจริงพ่อแม่ทำได้ยาก เอามาเป็นภารกิจ/metric แล้วมีแต่ทำให้รู้สึกผิด */
   parent: {
-    noBailout: 7, bailoutChances: 9, moneyTalk: 11,
+    moneyTalk: 11, moneyTalkLast: 8,   // คุยเรื่องเงิน — สัปดาห์นี้ / สัปดาห์ก่อน (ไว้ทำเทรนด์)
+    earnChances: 4,                    // เปิดโอกาสให้ลูกหาเงิน (ไม่ยื่นฟรี)
+    missionStreak: 3,                  // ทำภารกิจตัวเองครบต่อเนื่องกี่สัปดาห์
     missions: [
       { done: true,  t: { en: "Open up one chance for them to earn", th: "เปิดโอกาสให้ลูกหาเงิน 1 ครั้ง" } },
       { done: true,  t: { en: "Talk about money twice — without lecturing", th: "คุยเรื่องเงิน 2 ครั้ง แบบไม่สอน" } },
-      { done: false, t: { en: "Don't cover for them when they run short", th: "ไม่ช่วยจ่ายเมื่อลูกเงินไม่พอ" } }
+      { done: false, t: { en: "Ask what their splitting rule is — and don't correct it", th: "ถามว่ากฎแบ่งเงินของลูกเป็นยังไง แล้วอย่าไปแก้" } }
     ],
     article: {
-      t: { en: "Why this week is about letting them run short",
-           th: "ทำไมสัปดาห์นี้ถึงควรปล่อยให้ลูกเจอเงินไม่พอ" },
-      s: { en: "Children whose parents step in every time they run out never connect a decision to its result. Across the research, the parent's behaviour predicts a child's money habits more strongly than any course does.",
-           th: "เด็กที่พ่อแม่เข้าไปช่วยทุกครั้งที่เงินหมด จะไม่เชื่อมโยงการตัดสินใจเข้ากับผลลัพธ์ งานวิจัยชี้ตรงกันว่าพฤติกรรมของพ่อแม่ทำนายนิสัยการเงินของลูกได้แรงกว่าหลักสูตรใดๆ" }
+      t: { en: "Why the rule has to be theirs",
+           th: "ทำไมกฎแบ่งเงินต้องเป็นของลูกเอง" },
+      s: { en: "A rule a child sets themselves gets followed; a rule handed to them gets forgotten by the second week. Across the research, the parent's behaviour predicts a child's money habits more strongly than any course does — and the most useful thing to model here is asking rather than correcting.",
+           th: "กฎที่เด็กตั้งเองจะถูกทำตาม ส่วนกฎที่ยื่นให้จะถูกลืมภายในสัปดาห์ที่สอง งานวิจัยชี้ตรงกันว่าพฤติกรรมของพ่อแม่ทำนายนิสัยการเงินของลูกได้แรงกว่าหลักสูตรใดๆ และสิ่งที่ควรทำให้ลูกเห็นที่สุดตรงนี้คือการถาม ไม่ใช่การแก้" }
     }
   },
 
@@ -216,7 +218,16 @@ const SEED = {
   lastWeek: { coverage: 11, saving: 24, practice: 2, needPct: 48, streak: 2 },
 
   /* --- วันแรก → ตอนนี้ --- */
-  before: { coverage: 0, saving: 0, practice: 0, need: 35, streak: 0, score: 21, bailoutFree: 20 },
+  before: { coverage: 0, saving: 0, practice: 0, need: 35, streak: 0, score: 21 },
+
+  /* --- ⭐ §2.4 ความสม่ำเสมอรายสัปดาห์ — พระเอกของ "นิสัยการเงินของฉัน"
+     ok = สัปดาห์นั้นเงินเข้าแล้วแบ่งตามกฎครบ · reps = ฝึกกี่ครั้งในสัปดาห์นั้น · ไม่ผูกกับยอดเงินเลย
+     เด็กบ้านที่มีน้อยจึงเห็นตัวเองว่า "ฝึกสม่ำเสมอ = ถูกทาง" ได้เท่ากัน (N2/N3) */
+  habitWeeks: [
+    { w: 1, ok: true, reps: 9 },
+    { w: 2, ok: true, reps: 8 },
+    { w: 3, ok: true, reps: 7 }
+  ],
 
   badges: [
     { ic: "search",   got: true,  t: { en: "Found my real cost", th: "รู้ค่าใช้จ่ายจริงแล้ว" } },
@@ -231,7 +242,6 @@ const SEED = {
     en: "I walked past the bubble tea shop three times this week — and I didn't have to talk myself out of it. I just didn't want it.",
     th: "อาทิตย์นี้เดินผ่านร้านชานมได้ 3 ครั้ง โดยไม่ต้องห้ามตัวเองเลย มันไม่อยากเอง"
   },
-  reflection: { did: "", missed: "", fix: "" },
   certificateIssued: true    // ทุกคนที่เรียนจบได้ ไม่ผูกกับผลลัพธ์การเงิน
 };
 
@@ -240,15 +250,30 @@ const SEED = {
 const KB = {
   s: null,
 
-  /* คีย์เก็บของขยับเลขทุกครั้งที่ "รูปร่าง" ของ state เปลี่ยน (ซองเพิ่ม, บทเรียนเพิ่มวัน)
-     ไม่งั้นเครื่องที่เคยเปิดเวอร์ชันก่อนจะโหลด state เก่าที่ไม่มีคีย์ใหม่แล้วพัง */
+  /** เติมคีย์ที่ SEED มีแต่ state ที่เซฟไว้ไม่มี — ของผู้ใช้ชนะเสมอ SEED แค่อุดรู
+      ตื้นสองชั้นพอ: ชั้นบน + ออบเจ็กต์ลูกอย่าง parent/streak ที่เพิ่มฟิลด์บ่อยที่สุด
+      ไม่แตะ array เพราะ income/loans/ruleHistory เป็นข้อมูลผู้ใช้ ห้ามให้ SEED ปน */
+  fill(saved, seed) {
+    const out = { ...seed, ...saved };
+    Object.keys(seed).forEach(k => {
+      const sv = seed[k], uv = saved[k];
+      const plain = v => v && typeof v === "object" && !Array.isArray(v);
+      if (plain(sv) && plain(uv)) out[k] = { ...sv, ...uv };
+    });
+    return out;
+  },
+
+  /* ⚠️ ขยับเลขคีย์ทุกครั้งที่ "รูปร่าง" ของ state เปลี่ยนแบบที่ fill() อุดไม่ได้
+     — ซองเพิ่ม/ลด, บทเรียนเพิ่มวัน, อะไรก็ตามที่เป็น array
+     fill() อุดได้แค่ฟิลด์ใหม่ที่เป็นค่าเดี่ยวหรือออบเจ็กต์ ส่วน array ของเก่าจะชนะเสมอ
+     เคยลืมมาแล้วรอบหนึ่ง ผลคือจอขาวทั้งหน้า ไม่ใช่แค่ตัวเลขเพี้ยน */
   boot() {
     try {
-      const raw = localStorage.getItem("kfapp3");
-      this.s = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(SEED));
+      const raw = localStorage.getItem("kfapp4");
+      this.s = raw ? this.fill(JSON.parse(raw), SEED) : JSON.parse(JSON.stringify(SEED));
     } catch (e) { this.s = JSON.parse(JSON.stringify(SEED)); }
   },
-  save()  { try { localStorage.setItem("kfapp3", JSON.stringify(this.s)); } catch (e) {} },
+  save()  { try { localStorage.setItem("kfapp4", JSON.stringify(this.s)); } catch (e) {} },
   reset() { this.s = JSON.parse(JSON.stringify(SEED)); this.save(); },
 
   /* ---------- ค่าใช้จ่าย ---------- */
@@ -361,16 +386,17 @@ const KB = {
       ต้องรู้จำนวนครั้งที่อยากซื้อทั้งหมด ซึ่งเก็บจริงไม่ได้ (§4.1) */
   practiceCount() { return this.s.intents.length; },                                       // 5
 
-  /* 🏆 Money Habit Score — ถ่วงน้ำหนักตามสเปค 2026-07-27
-     coverage 30 + adherence 30 + ฝึกคิด 15 + streak 15 + reflection 10
-     เกณฑ์เต็มของ 2 ตัวกลาง: ฝึกคิด 5 ครั้ง/สัปดาห์ · streak 4 สัปดาห์ (= จบโปรแกรม) */
+  /* 🏆 Money Habit Score
+     เดิม coverage 30 + adherence 30 + ฝึกคิด 15 + streak 15 + reflection 10
+     2026-07-31 ตัด "สะท้อนตัวเอง" ออกจากแอป → เกลี่ย 10 ที่ว่างตามสัดส่วนเดิม
+     เป็น 33/33/17/17 (รวม 100) สัดส่วนระหว่างตัวที่เหลือจึงไม่เปลี่ยน
+     เกณฑ์เต็มของ 2 ตัวหลัง: ฝึกคิด 5 ครั้ง/สัปดาห์ · streak 4 สัปดาห์ (= จบโปรแกรม) */
   scoreParts() {
     return [
-      { k: L("Covered", "หาเองได้"),                v: Math.min(100, this.coverage()), w: .30 },
-      { k: L("Followed own rule", "ทำตามกฎตัวเอง"),  v: this.adherence(),               w: .30 },
-      { k: L("Practised thinking", "ฝึกคิดก่อนซื้อ"), v: Math.min(100, this.practiceCount() / 5 * 100), w: .15 },
-      { k: L("Kept it up", "ทำต่อเนื่อง"),            v: Math.min(100, this.s.streak.weeks / 4 * 100),  w: .15 },
-      { k: L("Reflected", "สะท้อนตัวเอง"),            v: this.pct(this.s.reflectionsDone, this.s.reflectionsDue), w: .10 }
+      { k: L("Covered", "หาเองได้"),                v: Math.min(100, this.coverage()), w: .33 },
+      { k: L("Followed own rule", "ทำตามกฎ"),        v: this.adherence(),               w: .33 },
+      { k: L("Practised thinking", "ฝึกคิดก่อนซื้อ"), v: Math.min(100, this.practiceCount() / 5 * 100), w: .17 },
+      { k: L("Kept it up", "ทำต่อเนื่อง"),            v: Math.min(100, this.s.streak.weeks / 4 * 100),  w: .17 }
     ];
   },
   score() { return Math.round(this.scoreParts().reduce((a, p) => a + p.v * p.w, 0)); },   // 64
@@ -383,7 +409,27 @@ const KB = {
   emptyEnvs() { return this.s.envelopes.filter(e => this.envBal(e) === 0 && e.inn > 0); },
 
   /* ---------- พ่อแม่ ---------- */
-  bailoutFree() { const p = this.s.parent; return this.pct(p.noBailout, p.bailoutChances); },  // 78%
+  /* ---------- ⭐ §2.4 สัญญาณนิสัย (ฝั่งเด็ก) ----------
+     ทั้ง 3 ตัวห้ามผูกกับยอดเงินหรือ coverage % — วัด "ฝึกสม่ำเสมอแค่ไหน" ไม่ใช่ "หาได้เท่าไหร่" */
+  habitStreak()  { return this.s.streak.weeks; },
+  habitBest()    { return this.s.streak.best; },
+  /** ริเริ่มเอง = บันทึกสดตอนนั้น ไม่ได้ถูกเตือน + ครั้งที่กดคิดก่อนซื้อเอง */
+  selfStarted()  { return this.s.income.filter(i => i.mode === "live").length + this.practiceCount(); },
+  liveLogs()     { return this.s.income.filter(i => i.mode === "live").length; },
+  backfillLogs() { return this.s.income.filter(i => i.mode !== "live").length; },
+
+  /** ⭐ "การฝึก" 1 ครั้ง = แบ่งเงินตามกฎ 1 ครั้ง หรือ กดคิดก่อนซื้อ 1 ครั้ง
+      นับเฉพาะการกระทำที่เด็กลงมือเอง ไม่นับยอดเงินและไม่นับการเปิดแอปเฉยๆ */
+  habitReps() { return this.s.alloc.followed + this.practiceCount(); },
+  /** จุดฝึกรายสัปดาห์ · สัปดาห์ล่าสุดคำนวณสด (ยอดรวม − สัปดาห์ก่อนหน้า)
+      เพื่อให้กรอกรายได้เพิ่มแล้วแถวล่างสุดยาวขึ้นต่อหน้า ไม่ต้องรอ seed */
+  repWeeks() {
+    const w = this.s.habitWeeks;
+    if (!w.length) return [];
+    const past = w.slice(0, -1);
+    const used = past.reduce((a, x) => a + (x.reps || 0), 0);
+    return [...past, { ...w[w.length - 1], reps: Math.max(0, this.habitReps() - used) }];
+  },
 
   /* ---------- ⭐ เงินกู้จำลอง ---------- */
   activeLoans() { return this.s.loans.filter(l => l.open); },

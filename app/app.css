@@ -67,6 +67,13 @@ body {
 .screen::-webkit-scrollbar-thumb { background: #D3D3DA; border-radius: 9px; }
 
 /* ---------- แถบล่าง ---------- */
+/* หน้าจอพัง — ต้องอ่านออกและกดแก้ได้เอง ไม่ใช่จอขาว */
+.crash { padding: 26px 20px; text-align: center; }
+.crash b { display: block; font-size: var(--fs-lg); font-weight: 700; margin-bottom: 8px; }
+.crash p { font-size: var(--fs-sm); color: var(--c-ink-2); line-height: 1.6; margin-bottom: 18px; }
+.crash code { display: block; margin-top: 16px; font-size: var(--fs-xs); color: var(--c-ink-3);
+  word-break: break-word; line-height: 1.5; }
+
 .tabbar {
   display: flex; background: var(--c-surface);
   border-top: 1px solid var(--c-line); padding: 8px 4px 22px; z-index: 20;

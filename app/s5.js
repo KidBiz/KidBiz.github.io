@@ -52,9 +52,6 @@ css: `
 .trg .b i { display: block; height: 100%; background: var(--c-pause); }
 .trg .n { font-size: var(--fs-sm); font-weight: 700; color: var(--c-ink-3); width: 18px; text-align: right; }
 
-.qbox { margin-bottom: 14px; }
-.qbox label { display: block; font-size: var(--fs-md); font-weight: 700; margin-bottom: 7px; }
-.qbox label span { color: var(--c-ink-3); font-weight: 500; font-size: var(--fs-sm); }
 .proud { background: linear-gradient(135deg, var(--brand-amber-soft), #FFEDC7); border-radius: var(--r-md); padding: 17px; box-shadow: var(--shadow); }
 .proud .lb { font-size: var(--fs-xs); font-weight: 700; color: var(--brand-amber-d); letter-spacing: .5px; margin-bottom: 8px;
   display: flex; align-items: center; gap: 6px; }
@@ -134,7 +131,7 @@ render(ctx) {
     <div class="step-c ${KB.adherence() > 0 ? "ok" : ""}">
       <div class="hd"><span class="no">2</span><span class="tt">${L("Did you split it?", "ได้แบ่งตามกฎไหม")}</span></div>
       <div class="ds">${L(`You've followed your own rule ${KB.s.alloc.followed} of ${KB.s.alloc.total} times.`,
-                          `ทำตามกฎตัวเองแล้ว ${KB.s.alloc.followed} จาก ${KB.s.alloc.total} ครั้ง`)}</div>
+                          `ทำตามกฎแล้ว ${KB.s.alloc.followed} จาก ${KB.s.alloc.total} ครั้ง`)}</div>
       <div class="ac"><button class="btn ghost" data-go="s4">${L("Check my envelopes", "ดูซองเงิน")}</button></div>
     </div>
 
@@ -145,11 +142,6 @@ render(ctx) {
       <div class="ac"><button class="btn ghost" id="backfill-intent">${L("Think one through", "ลองคิดสักอัน")}</button></div>
     </div>
 
-    <div class="step-c ${KB.s.reflection.did ? "ok" : ""}">
-      <div class="hd"><span class="no">4</span><span class="tt">${L("Three questions", "สะท้อน 3 คำถาม")}</span></div>
-      <div class="ds">${L("One sentence each is plenty.", "ข้อละประโยคเดียวก็พอ")}</div>
-      <div class="ac"><button class="btn ghost" data-stage="">${L("Go to the questions", "ไปตอบคำถาม")}</button></div>
-    </div>
   </div>
 
   <button class="btn" data-stage="">${L("Done for now", "พอแค่นี้ก่อน")}</button>`;
@@ -203,18 +195,6 @@ render(ctx) {
       "จุดแรกเกิดบ่อยสุด ลองเปลี่ยนเส้นทางกลับบ้านดูสัปดาห์หน้าไหม")}</div>
   </div>
 
-  <div class="card">
-    <div class="card-t">${I("message", 18)} ${L("Three questions", "สะท้อน 3 คำถาม")}
-      <span class="r">${KB.s.reflectionsDone}/${KB.s.reflectionsDue} ${L("weeks", "สัปดาห์")}</span></div>
-    <div class="qbox"><label>1. ${L("What went well?", "อะไรที่ทำได้ดี")} <span>${L("even a small thing", "เรื่องเล็กก็ได้")}</span></label>
-      <textarea class="inp" id="q1">${KB.s.reflection.did}</textarea></div>
-    <div class="qbox"><label>2. ${L("What slipped?", "อะไรที่พลาดไป")} <span>${L("no blame, just tell it", "ไม่ต้องโทษตัวเอง แค่เล่า")}</span></label>
-      <textarea class="inp" id="q2">${KB.s.reflection.missed}</textarea></div>
-    <div class="qbox" style="margin-bottom:8px"><label>3. ${L("What will you change?", "จะปรับอะไร")} <span>${L("one thing is enough", "ข้อเดียวพอ")}</span></label>
-      <textarea class="inp" id="q3">${KB.s.reflection.fix}</textarea></div>
-    <button class="btn sm ghost" id="qsave" style="width:100%;border-radius:var(--r-md)">${L("Save answers", "บันทึกคำตอบ")}</button>
-  </div>
-
   <div class="proud">
     <div class="lb">${I("star", 15)} ${L("PROUDEST MOMENT", "ประโยคที่ภูมิใจที่สุด")}</div>
     <div class="tx">"${LT(KB.s.proud)}"</div>
@@ -228,16 +208,5 @@ mount(el, ctx) {
 
   const bf = el.querySelector("#backfill-intent");
   if (bf) bf.onclick = () => openSheet("s2", { mode: "backfill" });
-
-  const s = el.querySelector("#qsave");
-  if (s) s.onclick = () => {
-    KB.s.reflection = {
-      did:    el.querySelector("#q1").value.trim(),
-      missed: el.querySelector("#q2").value.trim(),
-      fix:    el.querySelector("#q3").value.trim()
-    };
-    KB.save();
-    toast(L("Saved · ready to talk about in class", "บันทึกแล้ว · เอาไปคุยในคาบได้เลย"));
-  };
 }
 };

@@ -93,10 +93,9 @@ render() {
     ["save",   L("Savings rate", "อัตราออม"),                 b.saving + "%",   KB.savingRate() + "%",  KB.savingRate() - b.saving],
     ["hand",   L("Times practised", "ครั้งที่ฝึกคิด"),          b.practice,       KB.practiceCount(),     KB.practiceCount() - b.practice],
     ["scale",  L("Share that was a need", "สัดส่วนที่จำเป็น"),  b.need + "%",     KB.needPct() + "%",     KB.needPct() - b.need],
-    ["split",  L("Followed own rule", "ทำตามกฎตัวเอง"),        "—",              KB.adherence() + "%",   null],
+    ["split",  L("Followed own rule", "ทำตามกฎ"),              "—",              KB.adherence() + "%",   null],
     ["flame",  L("Weeks running", "สัปดาห์ต่อเนื่อง"),          b.streak,         KB.s.streak.weeks,      KB.s.streak.weeks - b.streak],
-    ["trophy", L("Money Habit Score", "คะแนนนิสัยการเงิน"),     b.score,          KB.score(),             KB.score() - b.score, true],
-    ["family", L("Parent: didn't step in", "พ่อแม่: ไม่ช่วยจ่าย"), b.bailoutFree + "%", KB.bailoutFree() + "%", KB.bailoutFree() - b.bailoutFree]
+    ["trophy", L("Money Habit Score", "คะแนนนิสัยการเงิน"),     b.score,          KB.score(),             KB.score() - b.score, true]
   ];
 
   /* สมรรถนะทางการเงิน 6 ด้าน — สิ่งที่ทำให้ใบประกาศโชว์หน่วยงานภายนอกได้จริง */
@@ -106,7 +105,7 @@ render() {
     { en: "Allocates income by a rule they set themselves",          th: "แบ่งรายได้ตามกฎที่ตั้งเอง" },
     { en: "Weighs a purchase against its real cost before deciding", th: "ชั่งน้ำหนักการซื้อกับต้นทุนจริงก่อนตัดสินใจ" },
     { en: "Understands how borrowing shifts cost into the future",   th: "เข้าใจว่าการกู้ย้ายต้นทุนไปไว้ในอนาคตอย่างไร" },
-    { en: "Reflects on their own money decisions week to week",      th: "สะท้อนการตัดสินใจเรื่องเงินของตัวเองได้ทุกสัปดาห์" }
+    { en: "Keeps a money habit going week after week",               th: "ทำนิสัยการเงินต่อเนื่องได้สัปดาห์แล้วสัปดาห์เล่า" }
   ];
 
   return `

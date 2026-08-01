@@ -37,11 +37,14 @@ css: `
 .vf .meta { font-size: var(--fs-xs); color: var(--c-ink-3); margin-bottom: 13px; line-height: 1.5; }
 .vf .btn-row .btn { padding: 12px 10px; font-size: var(--fs-sm); }
 
-.ptrack { display: flex; gap: 11px; margin-bottom: 13px; }
-.ptrack > div { flex: 1; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-md);
-  padding: 15px; box-shadow: var(--shadow); text-align: center; }
-.ptrack b { display: block; font-size: 29px; font-weight: 700; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+/* 3 สัญญาณการมีส่วนร่วม · กล่องแคบลงเพราะจาก 2 เป็น 3 ช่อง */
+.ptrack { display: flex; gap: 9px; margin-bottom: 10px; }
+.ptrack > div { flex: 1; min-width: 0; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-md);
+  padding: 14px 9px; box-shadow: var(--shadow); text-align: center; }
+.ptrack b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
 .ptrack small { font-size: var(--fs-xs); color: var(--c-ink-3); font-weight: 600; line-height: 1.4; display: block; margin-top: 4px; }
+.ptrack .tr { font-size: var(--fs-xs); font-weight: 700; color: var(--c-ink-3); margin-top: 5px; }
+.ptrack .tr.up { color: var(--c-fill-ink); }
 
 .mis { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--c-line); }
 .mis:last-of-type { border: 0; }
@@ -110,13 +113,17 @@ render() {
       "ของขวัญ เงินขวัญถุง หรือเงินที่ให้เปล่า → กด 'ไม่ใช่รายได้จากงาน' เพื่อให้ตัวเลขพัฒนาการตรงกับความจริง")}</div>
   </div>
 
-  <div class="card-t" style="margin:20px 0 11px;font-size:var(--fs-md)">${I("family", 19)} ${L("Your part — not your child's", "บทบาทของคุณ ไม่ใช่ของลูก")}</div>
+  <div class="card-t" style="margin:20px 0 11px;font-size:var(--fs-md)">${I("family", 19)} ${L("What I've been part of", "สิ่งที่ฉันมีส่วนร่วม")}</div>
 
   <div class="ptrack">
-    <div><b>${KB.bailoutFree()}%</b><small>${L(`didn't step in<br>${p.noBailout} of ${p.bailoutChances} chances`,
-      `ไม่เข้าไปช่วยจ่าย<br>${p.noBailout}/${p.bailoutChances} โอกาส`)}</small></div>
-    <div><b>${p.moneyTalk}</b><small>${L("money talks<br>this month", "ครั้งที่คุยเรื่องเงิน<br>กับลูกเดือนนี้")}</small></div>
+    <div><b>${p.moneyTalk}</b><small>${L("money talks<br>this month", "ครั้งที่คุยเรื่องเงิน<br>เดือนนี้")}</small>
+      <div class="tr ${p.moneyTalk >= p.moneyTalkLast ? "up" : ""}">${p.moneyTalk - p.moneyTalkLast >= 0 ? "↑" : "↓"} ${Math.abs(p.moneyTalk - p.moneyTalkLast)} ${L("vs last", "จากเดือนก่อน")}</div></div>
+    <div><b>${p.earnChances}</b><small>${L("chances to earn<br>I opened up", "โอกาสหาเงิน<br>ที่เปิดให้ลูก")}</small></div>
+    <div><b>${p.missionStreak}</b><small>${L("weeks I finished<br>my own missions", "สัปดาห์ที่ทำ<br>ภารกิจตัวเองครบ")}</small></div>
   </div>
+  <div class="tiny muted" style="margin-bottom:16px">${L(
+    "Three things you can actually do. None of them is about withholding money from your child.",
+    "สามอย่างที่พ่อแม่ทำได้จริง ไม่มีข้อไหนเกี่ยวกับการไม่ให้เงินลูก")}</div>
 
   <div class="card">
     <div class="card-t">${I("target", 18)} ${L("This week", "ภารกิจสัปดาห์นี้")} <span class="r">${p.missions.filter(m => m.done).length}/${p.missions.length}</span></div>
@@ -126,8 +133,8 @@ render() {
         <span class="t">${LT(m.t)}</span>
       </div>`).join("")}
     <div class="btn-row" style="margin-top:14px">
-      <button class="btn ghost sm" style="flex:1;border-radius:var(--r-md)" data-log="noBailout">+ ${L("Didn't step in", "ไม่ได้ช่วยจ่าย")}</button>
       <button class="btn ghost sm" style="flex:1;border-radius:var(--r-md)" data-log="moneyTalk">+ ${L("Talked money", "คุยเรื่องเงิน")}</button>
+      <button class="btn ghost sm" style="flex:1;border-radius:var(--r-md)" data-log="earnChances">+ ${L("Opened a chance", "เปิดโอกาสให้หาเงิน")}</button>
     </div>
   </div>
 
@@ -170,11 +177,12 @@ mount(el) {
     const m = KB.s.parent.missions[+b.dataset.mis]; m.done = !m.done; KB.save(); render();
   });
   el.querySelectorAll("[data-log]").forEach(b => b.onclick = () => {
-    const k = b.dataset.log, p = KB.s.parent;
-    if (k === "noBailout") { p.noBailout++; p.bailoutChances++; } else p.moneyTalk++;
+    const p = KB.s.parent;
+    p[b.dataset.log]++;
     KB.save(); render();
-    toast(k === "noBailout" ? L(`You're at ${KB.bailoutFree()}% 💪`, `ตอนนี้ ${KB.bailoutFree()}% แล้ว 💪`)
-                            : L("Logged", "บันทึกการคุยแล้ว"));
+    toast(b.dataset.log === "moneyTalk"
+      ? L("Logged — that's the one that predicts the most", "บันทึกแล้ว — ข้อนี้คือตัวที่ทำนายผลได้มากที่สุด")
+      : L("Logged — earning it beats being given it", "บันทึกแล้ว — ได้มาจากการทำเองดีกว่าได้เปล่า"));
   });
 }
 };

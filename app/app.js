@@ -3,16 +3,18 @@
    ปกติไม่ต้องแก้ไฟล์นี้ · แก้หน้าจอที่ s1.js … s7.js
    ============================================================ */
 
+/* s8 (นิสัยการเงิน) เป็นหน้าแรก เพราะคอร์สนี้ขายเรื่องการสร้างนิสัย ไม่ใช่การจัดการเงิน
+   เนื้อหาก้าวหน้าเดิม (s7) ต่อท้ายอยู่ในหน้าเดียวกัน จึงไม่มีแท็บของตัวเองแล้ว */
 const TABS = [
-  { id: "s1",  ic: "home",      t: { en: "Home",      th: "หน้าแรก" } },
+  { id: "s8",  ic: "home",      t: { en: "Habits",    th: "หน้าแรก" } },
+  { id: "s1",  ic: "coin",      t: { en: "Money",     th: "การเงิน" } },
   { id: "s4",  ic: "envelope",  t: { en: "Envelopes", th: "ซองเงิน" } },
   { id: "s5",  ic: "clipboard", t: { en: "Weekly",    th: "สัปดาห์" } },
   { id: "s2c", ic: "book",      t: { en: "Lessons",   th: "บทเรียน" } },
-  { id: "s7",  ic: "chart",     t: { en: "Progress",  th: "ก้าวหน้า" } },
   { id: "s6",  ic: "family",    t: { en: "Parents",   th: "พ่อแม่" } }
 ];
 
-let cur = "s1";
+let cur = "s8";
 let CTX = {};              // context แยกตามหน้า
 let sheetId = null, sheetCtx = {};
 
@@ -47,9 +49,25 @@ function render() {
     </div>
     <button class="icon-btn" id="why" title="${L("Why this screen works this way", "หลักการเบื้องหลังหน้านี้")}">?</button>`;
 
+  /* ถ้าหน้าจอพัง ให้เห็นว่าพังและกดแก้ได้ แทนที่จะได้จอขาวเงียบๆ
+     สาเหตุที่เจอจริงคือ state เก่าค้างอยู่ในเครื่องแล้วโค้ดใหม่หาฟิลด์ไม่เจอ
+     ยังโยน error ขึ้น console เหมือนเดิม ไม่กลบบั๊ก */
   const scr = document.getElementById("scr");
-  scr.innerHTML = S.render(ctx);
-  if (S.mount) S.mount(scr, ctx);
+  try {
+    scr.innerHTML = S.render(ctx);
+    if (S.mount) S.mount(scr, ctx);
+  } catch (err) {
+    console.error(err);
+    scr.innerHTML = `<div class="crash">
+      <b>${L("This screen couldn't open", "หน้านี้เปิดไม่ขึ้น")}</b>
+      <p>${L("Usually it's old demo data left in this browser from an earlier version.",
+              "ส่วนใหญ่เกิดจากข้อมูลเดโมเวอร์ชันเก่าที่ค้างอยู่ในเบราว์เซอร์นี้")}</p>
+      <button class="btn fill" id="crash-reset">${L("Reset demo data", "รีเซ็ตข้อมูลเดโม")}</button>
+      <code>${String(err && err.message || err)}</code>
+    </div>`;
+    const b = scr.querySelector("#crash-reset");
+    if (b) b.onclick = () => { KB.reset(); location.reload(); };
+  }
 
   document.getElementById("tabs").className = "tabbar" + (S.parent ? " parent" : "");
   document.getElementById("tabs").innerHTML = TABS.map(t =>
@@ -122,7 +140,7 @@ function boot() {
   const st = document.createElement("style");
   st.textContent = Object.values(SCREENS).map(s => s.css || "").join("\n");
   document.head.appendChild(st);
-  go("s1");
+  go(TABS[0].id);   // แท็บซ้ายสุดเสมอ — ย้ายลำดับใน TABS แล้วหน้าเปิดเปลี่ยนตามเอง
 }
 if (document.readyState === "complete") boot();
 else window.addEventListener("load", boot);
